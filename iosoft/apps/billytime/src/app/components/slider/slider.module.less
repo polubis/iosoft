@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .wrapper {
+    overflow-x: hidden;
+
+    .slider {
+      display: flex;
+      align-items: center;
+      transition: 0.2s transform;
+
+      &.grab {
+        cursor: grab;
+      }
+
+      &.draging {
+        & * {
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+      }
+
+      & > * {
+        flex-shrink: 0;
+      }
+    }
+  }
+}
