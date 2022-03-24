@@ -1,9 +1,5 @@
-import { Calendar } from './components';
-
-import "swiper/css/bundle";
-
 export function App() {
-  return <Calendar />;
+  return <div>my app here</div>;
 }
 
 export default App;
