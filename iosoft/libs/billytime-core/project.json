@@ -1,0 +1,23 @@
+{
+  "root": "libs/billytime-core",
+  "sourceRoot": "libs/billytime-core/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/billytime-core/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/billytime-core"],
+      "options": {
+        "jestConfig": "libs/billytime-core/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

@@ -1,58 +1,28 @@
 import { ExpensesCalendarComponent } from './components';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
-  CostVo,
-  CurrencyVo,
-  ExpenseCategory,
-  ExpenseVo,
-  BalanceVo,
-} from './models';
-import { addDays } from 'date-fns';
+  useAppSelector,
+  selectExpenses,
+  loadExpenses,
+  useAppDispatch,
+} from '../../store';
+import { useEffect } from 'react';
 
 export const ExpensesModule = () => {
-  return (
-    <ExpensesCalendarComponent
-      data={[
-        new ExpenseVo(
-          0,
-          'Potatos',
-          ExpenseCategory.Food,
-          new CostVo(100),
-          new Date(),
-          new BalanceVo(2200),
-          new CurrencyVo('$'),
-          ''
-        ),
-        new ExpenseVo(
-          1,
-          'Carrot',
-          ExpenseCategory.Food,
-          new CostVo(250),
-          addDays(new Date(), 2),
-          new BalanceVo(2330),
-          new CurrencyVo('$'),
-          ''
-        ),
-        new ExpenseVo(
-          2,
-          'Carrot',
-          ExpenseCategory.Food,
-          new CostVo(250),
-          addDays(new Date(), 2),
-          new BalanceVo(2200),
-          new CurrencyVo('$'),
-          ''
-        ),
-        new ExpenseVo(
-          3,
-          'Carrot',
-          ExpenseCategory.Food,
-          new CostVo(250),
-          addDays(new Date(), 2),
-          new BalanceVo(2200),
-          new CurrencyVo('$'),
-          ''
-        ),
-      ]}
-    />
-  );
+  const expenses = useAppSelector(selectExpenses);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadExpenses());
+  }, []);
+
+  if (expenses.type === 'Pending') {
+    return <CircularProgress />;
+  }
+
+  if (expenses.type === 'Done') {
+    return <ExpensesCalendarComponent data={expenses.data} />;
+  }
+
+  return null;
 };

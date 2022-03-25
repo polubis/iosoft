@@ -2,6 +2,10 @@
   "version": 2,
   "projects": {
     "billytime": "apps/billytime",
-    "billytime-e2e": "apps/billytime-e2e"
+    "billytime-api": "apps/billytime-api",
+    "billytime-core": "libs/billytime-core",
+    "billytime-e2e": "apps/billytime-e2e",
+    "sm": "libs/sm",
+    "vo": "libs/vo"
   }
 }

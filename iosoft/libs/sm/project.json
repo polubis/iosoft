@@ -1,0 +1,23 @@
+{
+  "root": "libs/sm",
+  "sourceRoot": "libs/sm/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/sm/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/sm"],
+      "options": {
+        "jestConfig": "libs/sm/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

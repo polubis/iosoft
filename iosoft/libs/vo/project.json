@@ -1,0 +1,23 @@
+{
+  "root": "libs/vo",
+  "sourceRoot": "libs/vo/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/vo/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/vo"],
+      "options": {
+        "jestConfig": "libs/vo/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

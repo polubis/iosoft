@@ -17,7 +17,8 @@
         "tsConfig": "apps/billytime/tsconfig.app.json",
         "assets": [
           "apps/billytime/src/favicon.ico",
-          "apps/billytime/src/assets"
+          "apps/billytime/src/assets",
+          "apps/billytime/src/mockServiceWorker.js"
         ],
         "styles": ["apps/billytime/src/styles.less"],
         "scripts": [],

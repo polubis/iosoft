@@ -3,4 +3,5 @@
 
 export const environment = {
   production: false,
+  API: 'https://uhnmuvvitk.execute-api.eu-north-1.amazonaws.com/prod',
 };

@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@iosoft/billytime-core": ["libs/billytime-core/src/index.ts"],
+      "@iosoft/sm": ["libs/sm/src/index.ts"],
+      "@iosoft/vo": ["libs/vo/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
