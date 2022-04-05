@@ -6,6 +6,7 @@ export interface Wallet {
   name: string;
   description: Description;
   currency: Currency;
+  balance: number;
 }
 
 export interface WalletFormData {

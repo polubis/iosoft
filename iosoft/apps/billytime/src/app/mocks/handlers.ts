@@ -80,6 +80,7 @@ export const handlers = [
       name: body.name,
       currency: CURRENCY_DICTIONARY.find((ct) => ct.value === body.currency)!,
       description: body.description,
+      balance: 2000,
     };
 
     return res(ctx.delay(2000), ctx.status(201), ctx.json(resBody));
