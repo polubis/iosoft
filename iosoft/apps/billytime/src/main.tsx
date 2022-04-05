@@ -2,10 +2,10 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
-import { App } from './app';
 import { environment } from './environments/environment';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
+import { AppRouter } from './app';
 
 if (!environment.production) {
   const { worker } = require('./app/mocks/browser');
@@ -16,7 +16,7 @@ ReactDOM.render(
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <AppRouter />
       </BrowserRouter>
     </Provider>
   </StrictMode>,

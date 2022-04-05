@@ -1,7 +1,22 @@
-import { ExpensesModule } from './modules/expenses';
-
-export const APP_ROUTER_CONFIG = [
-  { path: '', title: 'Dashboard', element: () => <div>Dashboard</div> },
-  { path: 'alarms', title: 'Alarms', element: () => <div>Alarms</div> },
-  { path: 'expenses', title: 'Expenses', element: ExpensesModule },
-];
+export const APP_ROUTER_CONFIG = {
+  APP: {
+    path: '/',
+    title: 'Home',
+  },
+  DASHBOARD: {
+    path: 'dashboard',
+    title: 'Dashboard',
+  },
+  ALARMS: {
+    path: 'alarms',
+    title: 'Alarms',
+  },
+  EXPENSES: {
+    path: 'expenses',
+    title: 'Expenses',
+  },
+  WALLETS: {
+    path: 'wallets',
+    title: 'Wallets',
+  },
+};

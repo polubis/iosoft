@@ -1,16 +1,30 @@
 import { Route, Routes } from 'react-router-dom';
 import { APP_ROUTER_CONFIG } from './app.router.config';
+import { ExpensesModule } from './modules/expenses';
+import { App } from './app';
+import { WalletsModule } from './modules/wallets';
 
 export const AppRouter = () => {
   return (
     <Routes>
-      {APP_ROUTER_CONFIG.map((route) => {
-        const Element = route.element;
-
-        return (
-          <Route key={route.path} path={route.path} element={<Element />} />
-        );
-      })}
+      <Route path={APP_ROUTER_CONFIG.APP.path} element={<App />}>
+        <Route
+          path={APP_ROUTER_CONFIG.DASHBOARD.path}
+          element={<div>Dashboard</div>}
+        />
+        <Route
+          path={APP_ROUTER_CONFIG.ALARMS.path}
+          element={<div>Alarms</div>}
+        />
+        <Route
+          path={APP_ROUTER_CONFIG.EXPENSES.path}
+          element={<ExpensesModule />}
+        />
+        <Route
+          path={APP_ROUTER_CONFIG.WALLETS.path}
+          element={<WalletsModule />}
+        />
+      </Route>
     </Routes>
   );
 };
