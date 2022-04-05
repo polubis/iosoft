@@ -1,2 +1,1 @@
-export * from './expense';
-export * from './general';
+export * from './models';

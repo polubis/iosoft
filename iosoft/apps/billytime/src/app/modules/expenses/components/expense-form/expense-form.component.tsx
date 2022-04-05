@@ -1,7 +1,7 @@
 import {
   ExpenseFormData,
-  EXPENSE_CATEGORIES,
-  EXPENSE_CURRENCY_TYPES,
+  EXPENSE_CATEGORIES_DICTIONARY,
+  CURRENCY_DICTIONARY,
 } from '@iosoft/billytime-core';
 import Stack from '@mui/material/Stack';
 import { useVo, required, minLength, maxLength, min } from '@iosoft/vo';
@@ -44,12 +44,12 @@ export const ExpenseFormComponent = ({
       <TextField<ExpenseFormData> type="date" required id="date" {...vo} />
       <SelectField<ExpenseFormData>
         id="category"
-        items={EXPENSE_CATEGORIES}
+        items={EXPENSE_CATEGORIES_DICTIONARY}
         {...vo}
       />
       <SelectField<ExpenseFormData>
         id="currency"
-        items={EXPENSE_CURRENCY_TYPES}
+        items={CURRENCY_DICTIONARY}
         {...vo}
       />
       <Btn.Primary disabled={vo.result.invalid || disabled} type="submit">
