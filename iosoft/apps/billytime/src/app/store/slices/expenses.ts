@@ -1,6 +1,6 @@
 import { Expense, ExpenseFormData } from '@iosoft/billytime-core';
 import { Done, Fail, Idle, isDoneState, Pending, State } from '@iosoft/sm';
-import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../store';
 
 interface ExpensesState {

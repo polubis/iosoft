@@ -5,6 +5,14 @@ import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { APP_ROUTER_CONFIG } from './app.router.config';
 import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import {
+  logIn,
+  selectLoggedInUser,
+  useAppDispatch,
+  useAppSelector,
+} from './store';
+import { CircularProgress } from '@mui/material';
 
 const Navigation = () => (
   <>
@@ -30,11 +38,26 @@ const Navigation = () => (
 );
 
 export const App = () => {
-  return (
-    <Layout>
-      <></>
-      <Navigation />
-      <Outlet />
-    </Layout>
-  );
+  const loggedInUser = useAppSelector(selectLoggedInUser);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(logIn({ username: 'exampleuser', password: 'exampleuser' }));
+  }, []);
+
+  if (loggedInUser.type === 'Pending') {
+    return <CircularProgress />;
+  }
+
+  if (loggedInUser.type === 'Done') {
+    return (
+      <Layout>
+        <></>
+        <Navigation />
+        <Outlet />
+      </Layout>
+    );
+  }
+
+  return null;
 };

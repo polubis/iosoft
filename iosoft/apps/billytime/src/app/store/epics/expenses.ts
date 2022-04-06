@@ -1,7 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { Epic } from 'redux-observable';
 import { catchError, map, of, switchMap, filter } from 'rxjs';
-import { ExpensesService } from '../../modules/expenses/services';
+import { expensesService } from '../../services';
 import {
   createdExpense,
   createExpense,
@@ -16,7 +16,7 @@ export const expensesEpic: Epic<AnyAction, AnyAction, AppState> = (action$) =>
   action$.pipe(
     filter(loadExpenses.match),
     switchMap(() =>
-      ExpensesService.getMany().pipe(
+      expensesService.loadExpenses().pipe(
         map((expenses) => loadedExpenses(expenses)),
         catchError(() => of(loadExpensesFail()))
       )
@@ -29,7 +29,7 @@ export const expensesCreationEpic: Epic<AnyAction, AnyAction, AppState> = (
   action$.pipe(
     filter(createExpense.match),
     switchMap(({ payload }) =>
-      ExpensesService.postOne(payload).pipe(
+      expensesService.createExpense(payload).pipe(
         map((expenses) => createdExpense(expenses)),
         catchError(() => of(createExpenseFail()))
       )
@@ -42,7 +42,7 @@ export const expensesCreationEpic: Epic<AnyAction, AnyAction, AppState> = (
 //   action$.pipe(
 //     filter(createExpense.match),
 //     switchMap(({ payload: { id, data } }) =>
-//       ExpensesService.putOne(id, data).pipe(
+//       expensesService.putOne(id, data).pipe(
 //         map((expenses) => createdExpense(expenses)),
 //         catchError(() => of(createExpenseFail()))
 //       )

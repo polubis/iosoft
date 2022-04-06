@@ -9,6 +9,8 @@ import {
   Wallet,
   WalletFormData,
   WalletExpense,
+  LogInFormData,
+  LoggedInUser,
 } from '@iosoft/billytime-core';
 
 const DATA = [
@@ -70,6 +72,17 @@ export const handlers = [
   }),
   rest.put(environment.API + '/expenses/:id', (req, res, ctx) => {
     return res(ctx.delay(2000), ctx.status(200), ctx.json(req.body));
+  }),
+
+  // AUTHORIZATION
+  rest.post(environment.API + '/authorization/log-in', (req, res, ctx) => {
+    const body = req.body as LogInFormData;
+    const resBody: LoggedInUser = {
+      id: Math.ceil(Math.random() * 100),
+      username: body.username,
+    };
+
+    return res(ctx.delay(2000), ctx.status(201), ctx.json(resBody));
   }),
 
   // WALLETS
