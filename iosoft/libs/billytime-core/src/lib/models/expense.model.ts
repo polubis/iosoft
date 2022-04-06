@@ -1,10 +1,10 @@
-import { Currency } from './currency';
-import { Description, Dictionary } from './general';
+import { Currency } from './currency.model';
+import { Description, Dictionary, Id } from './general.model';
 
 export interface ExpenseCategory extends Dictionary {}
 
 export interface Expense {
-  id: number;
+  id: Id;
   cost: number;
   name: string;
   category: ExpenseCategory;
@@ -12,6 +12,7 @@ export interface Expense {
   currency: Currency;
   date: string;
   description: Description;
+  walletId: Id;
 }
 
 export interface ExpenseFormData {

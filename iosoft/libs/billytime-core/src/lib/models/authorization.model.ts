@@ -1,4 +1,4 @@
-import { Id } from './general';
+import { Id } from './general.model';
 
 export interface LoggedInUser {
   id: Id;

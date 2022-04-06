@@ -1,4 +1,4 @@
-import { Dictionary } from "./general";
+import { Dictionary } from "./general.model";
 
 export interface Currency extends Dictionary {}
 

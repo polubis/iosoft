@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import { APP_ROUTER_CONFIG } from './app.router.config';
 import { ExpensesModule } from './modules/expenses';
 import { App } from './app';
-import { WalletsModule } from './modules/wallets';
 
 export const AppRouter = () => {
   return (
@@ -19,10 +18,6 @@ export const AppRouter = () => {
         <Route
           path={APP_ROUTER_CONFIG.EXPENSES.path}
           element={<ExpensesModule />}
-        />
-        <Route
-          path={APP_ROUTER_CONFIG.WALLETS.path}
-          element={<WalletsModule />}
         />
       </Route>
     </Routes>

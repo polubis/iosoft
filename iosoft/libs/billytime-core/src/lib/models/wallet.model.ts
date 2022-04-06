@@ -1,5 +1,5 @@
-import { Currency } from './currency';
-import { Description, Id } from './general';
+import { Currency } from './currency.model';
+import { Description, Id } from './general.model';
 
 export interface Wallet {
   id: Id;
@@ -7,6 +7,7 @@ export interface Wallet {
   description: Description;
   currency: Currency;
   balance: number;
+  color: string;
 }
 
 export interface WalletFormData {

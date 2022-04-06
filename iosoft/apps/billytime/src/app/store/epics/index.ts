@@ -1,2 +1,2 @@
-export * from './expenses';
-export * from './authorization';
+export * from './calendar-expenses.epic';
+export * from './authorization.epic';

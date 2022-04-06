@@ -1,14 +1,19 @@
 import { configureStore, AnyAction, combineReducers } from '@reduxjs/toolkit';
-import { expensesReducer, authorizationReducer } from './slices';
+import {
+  expensesReducer,
+  authorizationReducer,
+  walletsReducer,
+} from './slices';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { expensesEpic, expensesCreationEpic, logInEpic } from './epics';
+import * as epics from './epics';
 
 const rootReducer = combineReducers({
   expensesReducer,
   authorizationReducer,
+  walletsReducer,
 });
-const rootEpic = combineEpics(expensesEpic, expensesCreationEpic);
+const rootEpic = combineEpics(...Object.values(epics));
 
 export type AppState = ReturnType<typeof rootReducer>;
 

@@ -1,10 +1,13 @@
 import css from './wallets-grid.module.less';
-import { Wallet } from '@iosoft/billytime-core';
-import { WalletComponent } from './wallet.component';
+import { Id, Wallet } from '@iosoft/billytime-core';
+import { WalletComponent } from '../wallet/wallet.component';
+
+export type CheckedItems = Record<Id, boolean>;
 
 interface WalletsGridComponentProps {
   data: Wallet[];
-  onItemClick: (data: Wallet) => void;
+  checkedItems?: Record<Id, boolean>;
+  onItemSelect: (data: Wallet) => void;
 }
 
 const BACKGROUND = [
@@ -17,15 +20,20 @@ const BACKGROUND = [
   '#29b99b',
 ];
 
-export const WalletsGridComponent = ({ data, onItemClick }: WalletsGridComponentProps) => {
+export const WalletsGridComponent = ({
+  data,
+  checkedItems = {},
+  onItemSelect,
+}: WalletsGridComponentProps) => {
   return (
     <div className={css['container']}>
       {data.map((item, idx) => (
         <div key={item.id} className={css['item']}>
           <WalletComponent
             data={item}
+            checked={!!checkedItems[item.id]}
             background={BACKGROUND[idx]}
-            onNextClick={onItemClick}
+            onSelectClick={onItemSelect}
           />
         </div>
       ))}

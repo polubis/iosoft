@@ -15,8 +15,4 @@ export const APP_ROUTER_CONFIG = {
     path: 'expenses',
     title: 'Expenses',
   },
-  WALLETS: {
-    path: 'wallets',
-    title: 'Wallets',
-  },
 };

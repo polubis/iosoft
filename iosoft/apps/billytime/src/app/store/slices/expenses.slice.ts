@@ -1,7 +1,6 @@
 import { Expense, ExpenseFormData } from '@iosoft/billytime-core';
 import { Done, Fail, Idle, isDoneState, Pending, State } from '@iosoft/sm';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppState } from '../store';
 
 interface ExpensesState {
   expenses: State<Expense[]>;
@@ -32,6 +31,7 @@ const expensesSlice = createSlice({
     createdExpense: (state, { payload }: PayloadAction<Expense>) => {
       state.expenseCreationStatus = Done(payload);
 
+      // TODO REMOTE IT FROM THIS PLACE
       if (isDoneState(state.expenses)) {
         state.expenses.data.push(payload);
       }
@@ -41,11 +41,6 @@ const expensesSlice = createSlice({
     },
   },
 });
-
-export const selectExpenses = (state: AppState) =>
-  state.expensesReducer.expenses;
-export const selectExpenseCreationStatus = (state: AppState) =>
-  state.expensesReducer.expenseCreationStatus;
 
 export const {
   loadExpenses,

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Expense, ExpenseFormData } from '@iosoft/billytime-core';
+import { Expense, ExpenseFormData, Id } from '@iosoft/billytime-core';
 import css from './expenses-calendar.module.less';
 import { addDays, format, getWeekOfMonth } from 'date-fns';
 import IconButton from '@mui/material/IconButton';
@@ -16,12 +16,13 @@ import {
   useAppDispatch,
   useAppSelector,
 } from 'apps/billytime/src/app/store';
+import { CalendarExpense } from 'apps/billytime/src/app/models';
 
 interface ExpensesCalendarComponentProps {
-  data: Expense[];
+  data: CalendarExpense[];
 }
 
-type GroupedData = Record<string, Expense[] | undefined>;
+type GroupedData = Record<string, CalendarExpense[] | undefined>;
 
 const DATE_FORMAT = 'MM/dd/yyyy';
 
@@ -42,7 +43,7 @@ const generateWeek = (from: Date): Date[] => {
   );
 };
 
-const groupData = (data: Expense[]): GroupedData => {
+const groupData = (data: CalendarExpense[]): GroupedData => {
   return data.reduce<GroupedData>((acc, item) => {
     const stringDate = format(new Date(item.date), DATE_FORMAT);
     const dates = acc[stringDate];
@@ -81,12 +82,12 @@ const pickDataItems = (
   data: GroupedData,
   dates: Date[],
   idx: number
-): Expense[] => {
+): CalendarExpense[] => {
   const items = data[format(dates[idx], DATE_FORMAT)];
   return Array.isArray(items) ? items : [];
 };
 
-const calculateDailySum = (expenses: Expense[]): number => {
+const calculateDailySum = (expenses: CalendarExpense[]): number => {
   return parseFloat(
     expenses.reduce<number>((acc, item) => item.cost + acc, 0).toPrecision(12)
   );
@@ -97,7 +98,7 @@ export const ExpensesCalendarComponent = ({
 }: ExpensesCalendarComponentProps) => {
   const [expenseFormData, setExpenseFormData] =
     useState<ExpenseFormData | null>(null);
-  const [expenseToEditId, setExpenseToEditId] = useState(-1);
+  const [expenseToEditId, setExpenseToEditId] = useState<Id>(-1);
 
   const { week, moveToNextWeek, moveToPreviousWeek, resetWeek } = useWeek();
 
@@ -186,7 +187,7 @@ export const ExpensesCalendarComponent = ({
                       });
                     }}
                   >
-                    <div className={css['itemMarker']}></div>
+                    <div className={css['itemMarker']} style={{ background: item.wallet.color }} />
                     <div className={css['itemContent']}>
                       <header className={css['itemHeader']}>
                         <span className={css['itemTextSmall']}>

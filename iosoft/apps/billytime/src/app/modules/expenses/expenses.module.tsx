@@ -1,28 +1,19 @@
-import { ExpensesCalendarComponent } from './components';
-import CircularProgress from '@mui/material/CircularProgress';
-import {
-  useAppSelector,
-  selectExpenses,
-  loadExpenses,
-  useAppDispatch,
-} from '../../store';
+import { ExpensesContainer, WalletsContainer } from './containers';
+import { LayoutComponent } from './components';
+import { loadWallets, useAppDispatch } from '../../store';
 import { useEffect } from 'react';
 
 export const ExpensesModule = () => {
-  const expenses = useAppSelector(selectExpenses);
   const dispatch = useAppDispatch();
-
+  
   useEffect(() => {
-    dispatch(loadExpenses());
+    dispatch(loadWallets())
   }, []);
 
-  if (expenses.type === 'Pending') {
-    return <CircularProgress />;
-  }
-
-  if (expenses.type === 'Done') {
-    return <ExpensesCalendarComponent data={expenses.data} />;
-  }
-
-  return null;
+  return (
+    <LayoutComponent>
+      <WalletsContainer />
+      <ExpensesContainer />
+    </LayoutComponent>
+  );
 };

@@ -7,51 +7,98 @@ import {
   EXPENSE_CATEGORIES_DICTIONARY,
   CURRENCY_DICTIONARY,
   Wallet,
-  WalletFormData,
-  WalletExpense,
   LogInFormData,
   LoggedInUser,
 } from '@iosoft/billytime-core';
 
-const DATA = [
+const EXPENSES_MOCK: Expense[] = [
   {
     id: 0,
     name: 'Potatos',
-    category: {
-      label: 'Food',
-      value: 'food',
-    },
+    category: EXPENSE_CATEGORIES_DICTIONARY[0],
     cost: 100,
     date: format(new Date(), 'yyyy-MM-dd'),
     balance: 2220,
-    currency: {
-      label: 'Dollar',
-      value: '$',
-    },
+    currency: CURRENCY_DICTIONARY[0],
     description: null,
+    walletId: 0,
   },
   {
     id: 1,
     name: 'Potatos',
-    category: {
-      label: 'Food',
-      value: 'food',
-    },
+    category: EXPENSE_CATEGORIES_DICTIONARY[0],
     cost: 100,
     date: format(new Date(), 'yyyy-MM-dd'),
     balance: 2220,
-    currency: {
-      label: 'Dollar',
-      value: '$',
-    },
+    currency: CURRENCY_DICTIONARY[0],
     description: null,
+    walletId: 1,
+  },
+];
+
+const WALLETS_MOCK: Wallet[] = [
+  {
+    id: 0,
+    name: 'My euro wallet',
+    description: 'Here hold euros',
+    balance: 2000,
+    currency: CURRENCY_DICTIONARY[0],
+    color: '#3376ed',
+  },
+  {
+    id: 1,
+    name: 'My euro wallet',
+    description: 'Here hold euros',
+    balance: 2000,
+    currency: CURRENCY_DICTIONARY[0],
+    color: '#f5b9dd',
+  },
+  {
+    id: 2,
+    name: 'My euro wallet',
+    description: 'Here hold euros',
+    balance: 2000,
+    currency: CURRENCY_DICTIONARY[0],
+    color: '#e8d8b7',
+  },
+  {
+    id: 3,
+    name: 'My euro wallet',
+    description: 'Here hold euros',
+    balance: 2000,
+    currency: CURRENCY_DICTIONARY[0],
+    color: '#c0aaee',
+  },
+  {
+    id: 4,
+    name: 'My euro wallet',
+    description: 'Here hold euros',
+    balance: 2000,
+    currency: CURRENCY_DICTIONARY[0],
+    color: '#9fcff4',
+  },
+  {
+    id: 5,
+    name: 'My euro wallet',
+    description: 'Here hold euros',
+    balance: 2000,
+    currency: CURRENCY_DICTIONARY[0],
+    color: '#802bd0',
+  },
+  {
+    id: 6,
+    name: 'My euro wallet',
+    description: 'Here hold euros',
+    balance: 2000,
+    currency: CURRENCY_DICTIONARY[0],
+    color: '#29b99b',
   },
 ];
 
 export const handlers = [
   // EXPENSES
   rest.get(environment.API + '/expenses', (req, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(DATA));
+    return res(ctx.delay(1000), ctx.status(200), ctx.json(EXPENSES_MOCK));
   }),
   rest.post(environment.API + '/expenses', (req, res, ctx) => {
     const body = req.body as ExpenseFormData;
@@ -62,6 +109,7 @@ export const handlers = [
       description: body.description,
       balance: 1230,
       id: Math.ceil(Math.random() * 100),
+      walletId: Math.ceil(Math.random() * 100),
       category: EXPENSE_CATEGORIES_DICTIONARY.find(
         (ct) => ct.value === body.category
       )!,
@@ -82,37 +130,11 @@ export const handlers = [
       username: body.username,
     };
 
-    return res(ctx.delay(2000), ctx.status(201), ctx.json(resBody));
+    return res(ctx.status(201), ctx.json(resBody));
   }),
 
   // WALLETS
-  rest.post(environment.API + '/wallets', (req, res, ctx) => {
-    const body = req.body as WalletFormData;
-    const resBody: Wallet = {
-      id: Math.ceil(Math.random() * 100),
-      name: body.name,
-      currency: CURRENCY_DICTIONARY.find((ct) => ct.value === body.currency)!,
-      description: body.description,
-      balance: 2000,
-    };
-
-    return res(ctx.delay(2000), ctx.status(201), ctx.json(resBody));
-  }),
-
-  // WALLETS EXPENSES
-  rest.get(environment.API + '/wallets/:id/expenses', (req, res, ctx) => {
-    return res(
-      ctx.delay(2000),
-      ctx.status(200),
-      ctx.json(
-        DATA.map(
-          (item) =>
-            ({
-              ...item,
-              walletId: Math.ceil(Math.random() * 100),
-            } as WalletExpense)
-        )
-      )
-    );
+  rest.get(environment.API + '/wallets', (req, res, ctx) => {
+    return res(ctx.delay(2000), ctx.status(200), ctx.json(WALLETS_MOCK));
   }),
 ];

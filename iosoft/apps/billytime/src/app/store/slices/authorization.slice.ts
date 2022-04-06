@@ -1,7 +1,6 @@
 import { LoggedInUser, LogInFormData } from '@iosoft/billytime-core';
 import { Done, Fail, Idle, Pending, State } from '@iosoft/sm';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppState } from '../store';
 
 interface AuthorizationState {
   user: State<LoggedInUser>;
@@ -28,8 +27,5 @@ const authorizationSlice = createSlice({
 });
 
 export const { logIn, loggedIn, logInFail } = authorizationSlice.actions;
-
-export const selectLoggedInUser = (state: AppState) =>
-  state.authorizationReducer.user;
 
 export const authorizationReducer = authorizationSlice.reducer;

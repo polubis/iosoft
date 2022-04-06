@@ -4,5 +4,7 @@ import { AWS_INSTANCE } from './instances';
 
 export const authorizationService = {
   logIn: (data: LogInFormData) =>
-    from(AWS_INSTANCE.post('/expenses', data).then((res) => res.data)),
+    from(
+      AWS_INSTANCE.post('/authorization/log-in', data).then((res) => res.data)
+    ),
 };
