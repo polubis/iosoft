@@ -11,7 +11,8 @@ export interface Wallet {
 }
 
 export interface WalletFormData {
-  name: Wallet['name'];
+  name: string;
+  description: string;
+  color: string;
   currency: string;
-  description: Wallet['description'];
 }

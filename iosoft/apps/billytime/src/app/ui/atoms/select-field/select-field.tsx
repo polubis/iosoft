@@ -10,6 +10,7 @@ import { LabelValueItem } from '../../models';
 interface SelectFieldProps<T extends Record<string, any>> {
   id: keyof T;
   result: Result<T>;
+  required?: boolean;
   items: LabelValueItem[];
   onChange: (id: keyof T, value: T[keyof T]) => void;
 }
@@ -17,6 +18,7 @@ interface SelectFieldProps<T extends Record<string, any>> {
 export const SelectField = <T extends Record<string, any>>({
   id,
   result,
+  required,
   items,
   onChange,
 }: SelectFieldProps<T>) => {
@@ -29,7 +31,12 @@ export const SelectField = <T extends Record<string, any>>({
   const label = capitalize(selectId);
 
   return (
-    <FormControl sx={{ minWidth: 200 }} fullWidth error={result.errors[id].invalid}>
+    <FormControl
+      sx={{ minWidth: 200 }}
+      required={required}
+      fullWidth
+      error={result.errors[id].invalid}
+    >
       <InputLabel id={selectId}>{label}</InputLabel>
       <Select
         name={selectId}

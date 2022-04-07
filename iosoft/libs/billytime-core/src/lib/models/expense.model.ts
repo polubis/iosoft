@@ -16,9 +16,9 @@ export interface Expense {
 }
 
 export interface ExpenseFormData {
-  name: Expense['name'];
-  date: Expense['date'];
-  cost: Expense['cost'];
+  name: string;
+  date: string;
+  cost: number;
   category: string;
   currency: string;
   description: string;

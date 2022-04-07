@@ -23,6 +23,8 @@ export const ExpenseFormComponent = ({
     name: [required(), minLength(3), maxLength(20)],
     description: [minLength(3), maxLength(20)],
     cost: [min(0.01)],
+    currency: [required()],
+    category: [required()],
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -44,11 +46,13 @@ export const ExpenseFormComponent = ({
       <TextField<ExpenseFormData> type="date" required id="date" {...vo} />
       <SelectField<ExpenseFormData>
         id="category"
+        required
         items={EXPENSE_CATEGORIES_DICTIONARY}
         {...vo}
       />
       <SelectField<ExpenseFormData>
         id="currency"
+        required
         items={CURRENCY_DICTIONARY}
         {...vo}
       />
