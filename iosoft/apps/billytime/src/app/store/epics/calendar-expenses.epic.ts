@@ -1,16 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { Epic } from 'redux-observable';
-import {
-  catchError,
-  map,
-  of,
-  switchMap,
-  filter,
-  zip,
-  merge,
-  tap,
-  concat,
-} from 'rxjs';
+import { catchError, map, of, switchMap, filter, concat } from 'rxjs';
 import { expensesService, walletsService } from '../../services';
 import {
   createdExpense,
@@ -22,7 +12,7 @@ import {
   loadExpensesFail,
   loadWallets,
   loadWalletsFail,
-} from '../slices';
+} from '../actions';
 import { AppState } from '../store';
 
 export const calendarExpensesEpic: Epic<AnyAction, AnyAction, AppState> = (

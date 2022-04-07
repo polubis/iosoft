@@ -12,7 +12,7 @@ const initialState: ExpensesState = {
   expenseCreationStatus: Idle(),
 };
 
-const expensesSlice = createSlice({
+export const expensesSlice = createSlice({
   name: 'expenses',
   initialState,
   reducers: {
@@ -41,14 +41,3 @@ const expensesSlice = createSlice({
     },
   },
 });
-
-export const {
-  loadExpenses,
-  loadExpensesFail,
-  loadedExpenses,
-  createExpense,
-  createdExpense,
-  createExpenseFail,
-} = expensesSlice.actions;
-
-export const expensesReducer = expensesSlice.reducer;

@@ -10,7 +10,7 @@ const initialState: AuthorizationState = {
   user: Idle(),
 };
 
-const authorizationSlice = createSlice({
+export const authorizationSlice = createSlice({
   name: 'authorization',
   initialState,
   reducers: {
@@ -25,7 +25,3 @@ const authorizationSlice = createSlice({
     },
   },
 });
-
-export const { logIn, loggedIn, logInFail } = authorizationSlice.actions;
-
-export const authorizationReducer = authorizationSlice.reducer;

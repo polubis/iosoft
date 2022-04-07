@@ -10,7 +10,7 @@ const initialState: ExpensesState = {
   wallets: Idle(),
 };
 
-const walletsSlice = createSlice({
+export const walletsSlice = createSlice({
   name: 'wallets',
   initialState,
   reducers: {
@@ -25,8 +25,3 @@ const walletsSlice = createSlice({
     },
   },
 });
-
-export const { loadWallets, loadWalletsFail, loadedWallets } =
-  walletsSlice.actions;
-
-export const walletsReducer = walletsSlice.reducer;
