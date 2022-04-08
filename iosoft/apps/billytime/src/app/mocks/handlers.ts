@@ -9,6 +9,7 @@ import {
   Wallet,
   LogInFormData,
   LoggedInUser,
+  WalletFormData,
 } from '@iosoft/billytime-core';
 
 const EXPENSES_MOCK: Expense[] = [
@@ -136,5 +137,18 @@ export const handlers = [
   // WALLETS
   rest.get(environment.API + '/wallets', (req, res, ctx) => {
     return res(ctx.delay(2000), ctx.status(200), ctx.json(WALLETS_MOCK));
+  }),
+
+  rest.post(environment.API + '/wallets', (req, res, ctx) => {
+    const body = req.body as WalletFormData;
+    const resBody: Wallet = {
+      id: Math.ceil(Math.random() * 100),
+      name: body.name,
+      description: body.description,
+      currency: CURRENCY_DICTIONARY.find((ct) => ct.value === body.currency)!,
+      color: body.color,
+      balance: 0,
+    };
+    return res(ctx.delay(2000), ctx.status(200), ctx.json(resBody));
   }),
 ];

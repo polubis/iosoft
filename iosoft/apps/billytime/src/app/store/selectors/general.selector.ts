@@ -10,3 +10,6 @@ export const selectExpenseCreationStatus = (state: AppState) =>
 
 export const selectLoggedInUser = (state: AppState) =>
   state.authorizationReducer.user;
+
+export const selectWalletCreationStatus = (state: AppState) =>
+  state.walletsReducer.walletCreationStatus;

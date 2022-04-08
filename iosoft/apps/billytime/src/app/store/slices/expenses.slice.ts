@@ -30,11 +30,7 @@ export const expensesSlice = createSlice({
     },
     createdExpense: (state, { payload }: PayloadAction<Expense>) => {
       state.expenseCreationStatus = Done(payload);
-
-      // TODO REMOTE IT FROM THIS PLACE
-      if (isDoneState(state.expenses)) {
-        state.expenses.data.push(payload);
-      }
+      isDoneState(state.expenses) && state.expenses.data.push(payload);
     },
     createExpenseFail: (state) => {
       state.expenseCreationStatus = Fail();

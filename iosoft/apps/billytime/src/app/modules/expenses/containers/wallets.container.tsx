@@ -1,17 +1,18 @@
 import CircularProgress from '@mui/material/CircularProgress';
-import { useAppSelector, selectWallets } from '../../../store';
-import { useState } from 'react';
 import {
-  CheckedItems,
-  WalletsGridComponent,
-  WalletFormModalComponent,
-} from '../components';
+  useAppSelector,
+  selectWallets,
+  selectWalletCreationStatus,
+} from '../../../store';
+import { useState } from 'react';
+import { CheckedItems, WalletsGridComponent } from '../components';
 import {
   CURRENCY_DICTIONARY,
   Wallet,
   WalletFormData,
 } from '@iosoft/billytime-core';
 import { useFormModal } from 'apps/billytime/src/app/utils';
+import { WalletFormModalContainer } from './wallet-form-modal.container';
 
 const useCheckedWallets = () => {
   const [checkedWallets, setCheckedWallets] = useState<CheckedItems>({});
@@ -28,17 +29,10 @@ const useCheckedWallets = () => {
 
 export const WalletsContainer = () => {
   const wallets = useAppSelector(selectWallets);
+  const walletCreationStatus = useAppSelector(selectWalletCreationStatus);
   const [checkedWallets, handleSetCheckedWallet] = useCheckedWallets();
-  const {
-    openForCreate,
-    openForEdit,
-    close,
-    isEditMode,
-    formModalData,
-    formModalId,
-  } = useFormModal<WalletFormData>();
-
-  const handleSubmit = () => {};
+  const { openForCreate, openForEdit, close, formModalData, formModalId } =
+    useFormModal<WalletFormData>();
 
   if (wallets.type === 'Pending') {
     return <CircularProgress />;
@@ -48,15 +42,10 @@ export const WalletsContainer = () => {
     return (
       <>
         {formModalData && (
-          <WalletFormModalComponent
+          <WalletFormModalContainer
             data={formModalData}
-            disabled={false}
-            header={
-              isEditMode
-                ? `Edit wallet ${formModalData.name}`
-                : 'Create new wallet'
-            }
-            onSubmit={handleSubmit}
+            id={formModalId}
+            disabled={walletCreationStatus.type === 'Pending'}
             onClose={close}
           />
         )}

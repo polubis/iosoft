@@ -36,7 +36,7 @@ export const calendarExpensesEpic: Epic<AnyAction, AnyAction, AppState> = (
   );
 };
 
-export const expensesCreationEpic: Epic<AnyAction, AnyAction, AppState> = (
+export const expenseCreationEpic: Epic<AnyAction, AnyAction, AppState> = (
   action$
 ) =>
   action$.pipe(

@@ -3,7 +3,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import { WalletFormComponent, WalletFormComponentProps } from '../wallet-form';
 
-interface WalletFormModalComponentProps extends WalletFormComponentProps {
+export interface WalletFormModalComponentProps
+  extends WalletFormComponentProps {
   header: string;
   onClose: () => void;
 }

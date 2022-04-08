@@ -10,7 +10,6 @@ export const useFormModal = <T>() => {
   return {
     formModalData,
     formModalId,
-    isEditMode: formModalId !== DEFAULT_ID,
     openForCreate: (data: T) => {
       setFormModalData(data);
     },
