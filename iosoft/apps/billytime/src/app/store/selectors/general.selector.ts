@@ -13,3 +13,6 @@ export const selectLoggedInUser = (state: AppState) =>
 
 export const selectWalletCreationStatus = (state: AppState) =>
   state.walletsReducer.walletCreationStatus;
+
+export const selectWalletEditStatus = (state: AppState) =>
+  state.walletsReducer.walletEditStatus;

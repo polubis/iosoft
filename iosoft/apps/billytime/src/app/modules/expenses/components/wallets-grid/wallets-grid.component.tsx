@@ -9,6 +9,7 @@ interface WalletsGridComponentProps {
   checkedItems?: Record<Id, boolean>;
   onItemSelect: (data: Wallet) => void;
   onCreateWalletClick: () => void;
+  onItemClick: (data: Wallet) => void;
 }
 
 export const WalletsGridComponent = ({
@@ -16,6 +17,7 @@ export const WalletsGridComponent = ({
   checkedItems = {},
   onItemSelect,
   onCreateWalletClick,
+  onItemClick
 }: WalletsGridComponentProps) => {
   return (
     <>
@@ -27,6 +29,7 @@ export const WalletsGridComponent = ({
               checked={!!checkedItems[item.id]}
               background={item.color}
               onSelectClick={onItemSelect}
+              onClick={onItemClick}
             />
           </div>
         ))}

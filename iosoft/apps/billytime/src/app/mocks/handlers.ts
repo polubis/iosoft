@@ -151,4 +151,18 @@ export const handlers = [
     };
     return res(ctx.delay(2000), ctx.status(200), ctx.json(resBody));
   }),
+
+  rest.patch(environment.API + '/wallets/:id', (req, res, ctx) => {
+    console.log((req.params as any).id);
+    const body = req.body as WalletFormData;
+    const resBody: Wallet = {
+      id: +(req.params as any).id,
+      name: body.name,
+      description: body.description,
+      currency: CURRENCY_DICTIONARY.find((ct) => ct.value === body.currency)!,
+      color: body.color,
+      balance: 1200,
+    };
+    return res(ctx.delay(2000), ctx.status(200), ctx.json(resBody));
+  }),
 ];

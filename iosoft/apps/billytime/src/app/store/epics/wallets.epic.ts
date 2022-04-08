@@ -2,10 +2,17 @@ import { AnyAction } from '@reduxjs/toolkit';
 import { Epic } from 'redux-observable';
 import { catchError, map, of, switchMap, filter, concat } from 'rxjs';
 import { walletsService } from '../../services';
-import { createWallet, createdWallet, createWalletFail } from '../actions';
+import {
+  createWallet,
+  createdWallet,
+  createWalletFail,
+  editWallet,
+  editedWallet,
+  editWalletFail,
+} from '../actions';
 import { AppState } from '../store';
 
-export const walletCreationEpic: Epic<AnyAction, AnyAction, AppState> = (
+export const createWalletEpic: Epic<AnyAction, AnyAction, AppState> = (
   action$
 ) =>
   action$.pipe(
@@ -14,6 +21,17 @@ export const walletCreationEpic: Epic<AnyAction, AnyAction, AppState> = (
       walletsService.createWallet(payload).pipe(
         map((wallet) => createdWallet(wallet)),
         catchError(() => of(createWalletFail()))
+      )
+    )
+  );
+
+export const editWalletEpic: Epic<AnyAction, AnyAction, AppState> = (action$) =>
+  action$.pipe(
+    filter(editWallet.match),
+    switchMap(({ payload }) =>
+      walletsService.editWallet(payload.data, payload.id).pipe(
+        map((wallet) => editedWallet(wallet)),
+        catchError(() => of(editWalletFail()))
       )
     )
   );

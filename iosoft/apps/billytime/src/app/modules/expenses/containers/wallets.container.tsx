@@ -61,6 +61,17 @@ export const WalletsContainer = () => {
               currency: CURRENCY_DICTIONARY[0].value,
             })
           }
+          onItemClick={(data) =>
+            openForEdit(
+              {
+                name: data.name,
+                description: data.description ?? '',
+                color: data.color,
+                currency: data.currency.value,
+              },
+              data.id
+            )
+          }
         />
       </>
     );

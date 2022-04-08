@@ -7,6 +7,7 @@ interface WalletComponentProps {
   checked?: boolean;
   background: string;
   onSelectClick: (data: Wallet) => void;
+  onClick: (data: Wallet) => void;
 }
 
 export const WalletComponent = ({
@@ -14,9 +15,14 @@ export const WalletComponent = ({
   background,
   checked,
   onSelectClick,
+  onClick,
 }: WalletComponentProps) => {
   return (
-    <div className={`${css['container']}`} style={{ background }}>
+    <div
+      className={`${css['container']}`}
+      style={{ background }}
+      onClick={() => onClick(data)}
+    >
       <header>
         <span>{data.name}</span>
         <span>
@@ -26,6 +32,7 @@ export const WalletComponent = ({
       <Checkbox
         className={css['checkbox']}
         checked={checked}
+        onClick={(e) => e.stopPropagation()}
         onChange={() => onSelectClick(data)}
         sx={{
           color: '#fff',

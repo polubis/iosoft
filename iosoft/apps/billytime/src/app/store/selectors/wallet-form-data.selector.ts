@@ -1,8 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { selectWalletCreationStatus } from './general.selector';
+import {
+  selectWalletCreationStatus,
+  selectWalletEditStatus,
+} from './general.selector';
 
 export const selectWalletFormDataStatuses = createSelector(
   selectWalletCreationStatus,
-  selectWalletCreationStatus,
-  (walletCreationStatus) => [walletCreationStatus, walletCreationStatus]
+  selectWalletEditStatus,
+  (walletCreationStatus, walletEditStatus) => [
+    walletCreationStatus,
+    walletEditStatus,
+  ]
 );
