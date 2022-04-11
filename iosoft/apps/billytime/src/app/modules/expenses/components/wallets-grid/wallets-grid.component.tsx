@@ -17,13 +17,13 @@ export const WalletsGridComponent = ({
   checkedItems = {},
   onItemSelect,
   onCreateWalletClick,
-  onItemClick
+  onItemClick,
 }: WalletsGridComponentProps) => {
   return (
     <>
-      <div className={css['container']}>
+      <div className={css.container}>
         {data.map((item) => (
-          <div key={item.id} className={css['item']}>
+          <div key={item.id} className={css.item}>
             <WalletComponent
               data={item}
               checked={!!checkedItems[item.id]}

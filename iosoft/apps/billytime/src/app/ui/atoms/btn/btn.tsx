@@ -6,6 +6,6 @@ interface ButtonProps extends MuiButtonProps {}
 
 export const Btn = {
   Primary: (props: ButtonProps) => (
-    <MuiButton {...props} className={css['primary']} />
+    <MuiButton {...props} className={css.primary} />
   ),
 };

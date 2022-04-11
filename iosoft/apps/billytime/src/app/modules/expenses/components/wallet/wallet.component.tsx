@@ -19,7 +19,7 @@ export const WalletComponent = ({
 }: WalletComponentProps) => {
   return (
     <div
-      className={`${css['container']}`}
+      className={css.container}
       style={{ background }}
       onClick={() => onClick(data)}
     >
@@ -30,7 +30,7 @@ export const WalletComponent = ({
         </span>
       </header>
       <Checkbox
-        className={css['checkbox']}
+        className={css.checkbox}
         checked={checked}
         onClick={(e) => e.stopPropagation()}
         onChange={() => onSelectClick(data)}

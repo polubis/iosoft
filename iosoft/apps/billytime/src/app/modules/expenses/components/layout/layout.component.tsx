@@ -14,8 +14,8 @@ export const LayoutComponent = ({
   fail,
 }: LayoutComponentProps) => {
   return (
-    <div className={css['container']}>
-      {pending && <CircularProgress className={css['loader']} />}
+    <div className={css.container}>
+      {pending && <CircularProgress className={css.loader} />}
       {!pending && !fail && children()}
     </div>
   );

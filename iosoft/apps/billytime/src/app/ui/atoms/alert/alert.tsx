@@ -17,15 +17,15 @@ export interface AlertProps {
 export const Alert = memo(
   ({ marker, message, type = 'error', onClose }: AlertProps) => {
     return (
-      <div className={`${css['alert']} ${css[type]}`}>
-        <span className={css['marker']}>{marker}</span>
+      <div className={`${css.alert} ${css[type]}`}>
+        <span className={css.marker}>{marker}</span>
 
-        <div className={css['divider']} />
+        <div className={css.divider} />
 
-        <span className={css['message']}>{message}</span>
+        <span className={css.message}>{message}</span>
 
         {onClose && (
-          <IconButton className={css['closeBtn']} onClick={onClose}>
+          <IconButton className={css.closeBtn} onClick={onClose}>
             <CloseIcon />
           </IconButton>
         )}

@@ -55,7 +55,7 @@ export const Alerts = () => {
   }, []);
 
   return render(
-    <div className={css['alerts']}>
+    <div className={css.alerts}>
       {alerts.map((alert, idx) => (
         <Alert
           key={alert.id}

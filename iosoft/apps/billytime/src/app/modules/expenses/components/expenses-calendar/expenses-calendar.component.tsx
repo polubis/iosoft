@@ -120,13 +120,13 @@ export const ExpensesCalendarComponent = ({
   };
 
   return (
-    <div className={css['root']}>
-      <div className={css['toolbox']}>
-        <div className={css['datesRange']}>
+    <div className={css.root}>
+      <div className={css.toolbox}>
+        <div className={css.datesRange}>
           {getWeekOfMonth(week[0])} week of {format(week[0], 'MMMM yyyy')}
         </div>
 
-        <div className={css['navigation']}>
+        <div className={css.navigation}>
           <Tooltip title="Previous week">
             <IconButton onClick={moveToPreviousWeek}>
               <ChevronLeftIcon />
@@ -136,7 +136,7 @@ export const ExpensesCalendarComponent = ({
             <IconButton
               className={`${
                 nowAsString === format(week[0], DATE_FORMAT)
-                  ? css['activeNavItem']
+                  ? css.activeNavItem
                   : ''
               }`}
               onClick={resetWeek}
@@ -151,22 +151,20 @@ export const ExpensesCalendarComponent = ({
           </Tooltip>
         </div>
       </div>
-      <div className={`${css['container']}`}>
+      <div className={`${css.container}`}>
         {week.map((date, dateIdx) => (
-          <div className={css['col']} key={dateIdx}>
+          <div className={css.col} key={dateIdx}>
             <div
-              className={`${css['label']} ${
-                nowAsString === format(date, DATE_FORMAT)
-                  ? css['labelActive']
-                  : ''
+              className={`${css.label} ${
+                nowAsString === format(date, DATE_FORMAT) ? css.labelActive : ''
               }`}
             >
               {DAYS[dateIdx]}
-              <span className={css['labelNumber']}>{format(date, 'dd')}</span>
+              <span className={css.labelNumber}>{format(date, 'dd')}</span>
             </div>
-            <div className={css['items']}>
+            <div className={css.items}>
               {pickDataItems(groupedData, week, dateIdx).length === 0 ? (
-                <div className={css['noItems']}>
+                <div className={css.noItems}>
                   <IconButton size="large" onClick={() => {}}>
                     <AddShoppingCartIcon />
                   </IconButton>
@@ -176,7 +174,7 @@ export const ExpensesCalendarComponent = ({
                 pickDataItems(groupedData, week, dateIdx).map((item) => (
                   <div
                     key={item.id}
-                    className={css['item']}
+                    className={css.item}
                     onClick={() => {
                       setExpenseToEditId(item.id);
                       setExpenseFormData({
@@ -188,19 +186,19 @@ export const ExpensesCalendarComponent = ({
                     }}
                   >
                     <div
-                      className={css['itemMarker']}
+                      className={css.itemMarker}
                       style={{ background: item.wallet.color }}
                     />
-                    <div className={css['itemContent']}>
-                      <header className={css['itemHeader']}>
-                        <span className={css['itemTextSmall']}>
+                    <div className={css.itemContent}>
+                      <header className={css.itemHeader}>
+                        <span className={css.itemTextSmall}>
                           - {item.cost} {item.currency.value}
                         </span>
-                        <span className={css['time']}>
+                        <span className={css.time}>
                           {format(new Date(item.date), 'hh:mm')}
                         </span>
                       </header>
-                      <span className={css['itemTextBig']}>
+                      <span className={css.itemTextBig}>
                         {item.balance} {item.currency.value}
                       </span>
                     </div>
@@ -208,14 +206,14 @@ export const ExpensesCalendarComponent = ({
                 ))
               )}
             </div>
-            <div className={css['summary']}>
-              <span className={css['summaryLabel']}>Daily cost</span>
-              <span className={css['summaryBigLabel']}>
+            <div className={css.summary}>
+              <span className={css.summaryLabel}>Daily cost</span>
+              <span className={css.summaryBigLabel}>
                 {calculateDailySum(pickDataItems(groupedData, week, dateIdx))}{' '}
                 {data[0]?.currency.value}
               </span>
             </div>
-            <div className={css['footer']}>
+            <div className={css.footer}>
               <Button
                 startIcon={<AddShoppingCartIcon />}
                 onClick={() => {
