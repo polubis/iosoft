@@ -1,9 +1,4 @@
-import CircularProgress from '@mui/material/CircularProgress';
-import {
-  useAppSelector,
-  selectWallets,
-  selectWalletCreationStatus,
-} from '../../../store';
+import { useAppSelector, selectWalletCreationStatus } from '../../../store';
 import { useState } from 'react';
 import { CheckedItems, WalletsGridComponent } from '../components';
 import {
@@ -27,55 +22,50 @@ const useCheckedWallets = () => {
   return [checkedWallets, handleSetCheckedWallet] as const;
 };
 
-export const WalletsContainer = () => {
-  const wallets = useAppSelector(selectWallets);
+interface WalletsContainerProps {
+  data: Wallet[];
+}
+
+export const WalletsContainer = ({ data }: WalletsContainerProps) => {
   const walletCreationStatus = useAppSelector(selectWalletCreationStatus);
   const [checkedWallets, handleSetCheckedWallet] = useCheckedWallets();
   const { openForCreate, openForEdit, close, formModalData, formModalId } =
     useFormModal<WalletFormData>();
 
-  if (wallets.type === 'Pending') {
-    return <CircularProgress />;
-  }
-
-  if (wallets.type === 'Done') {
-    return (
-      <>
-        {formModalData && (
-          <WalletFormModalContainer
-            data={formModalData}
-            id={formModalId}
-            disabled={walletCreationStatus.type === 'Pending'}
-            onClose={close}
-          />
-        )}
-        <WalletsGridComponent
-          data={wallets.data}
-          checkedItems={checkedWallets}
-          onItemSelect={handleSetCheckedWallet}
-          onCreateWalletClick={() =>
-            openForCreate({
-              name: '',
-              description: '',
-              color: '#000',
-              currency: CURRENCY_DICTIONARY[0].value,
-            })
-          }
-          onItemClick={(data) =>
-            openForEdit(
-              {
-                name: data.name,
-                description: data.description ?? '',
-                color: data.color,
-                currency: data.currency.value,
-              },
-              data.id
-            )
-          }
+  return (
+    <>
+      {formModalData && (
+        <WalletFormModalContainer
+          data={formModalData}
+          id={formModalId}
+          disabled={walletCreationStatus.type === 'Pending'}
+          onClose={close}
         />
-      </>
-    );
-  }
-
-  return null;
+      )}
+      <WalletsGridComponent
+        data={data}
+        checkedItems={checkedWallets}
+        onItemSelect={handleSetCheckedWallet}
+        onCreateWalletClick={() =>
+          openForCreate({
+            name: '',
+            description: '',
+            color: '#000',
+            currency: CURRENCY_DICTIONARY[0].value,
+          })
+        }
+        onItemClick={(data) =>
+          openForEdit(
+            {
+              name: data.name,
+              description: data.description ?? '',
+              color: data.color,
+              currency: data.currency.value,
+            },
+            data.id
+          )
+        }
+      />
+    </>
+  );
 };

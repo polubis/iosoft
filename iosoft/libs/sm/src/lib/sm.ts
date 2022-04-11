@@ -26,5 +26,11 @@ export const Pending = (): PendingState => ({ type: 'Pending' });
 export const Done = <T>(data: T): DoneState<T> => ({ data, type: 'Done' });
 export const Fail = (): FailState => ({ type: 'Fail' });
 
+export const isPendingState = <T>(state: State<T>): state is PendingState =>
+  state.type === 'Pending';
+
 export const isDoneState = <T>(state: State<T>): state is DoneState<T> =>
   state.type === 'Done';
+
+export const isFailState = <T>(state: State<T>): state is FailState =>
+  state.type === 'Fail';

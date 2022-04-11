@@ -1,4 +1,5 @@
 import { Id, WalletFormData } from '@iosoft/billytime-core';
+import { isPendingState } from '@iosoft/sm';
 import {
   useAppDispatch,
   useAppSelector,
@@ -14,11 +15,13 @@ import {
 interface WalletFormModalContainerProps
   extends Omit<WalletFormModalComponentProps, 'header' | 'onSubmit'> {
   id: Id;
+  header?: string;
 }
 
 export const WalletFormModalContainer = ({
   data,
   id,
+  header,
   onClose,
 }: WalletFormModalContainerProps) => {
   const dispatch = useAppDispatch();
@@ -40,10 +43,11 @@ export const WalletFormModalContainer = ({
   return (
     <WalletFormModalComponent
       data={data}
-      disabled={
-        creationStatus.type === 'Pending' || editStatus.type === 'Pending'
+      disabled={disabled}
+      header={
+        header ??
+        (isEditMode ? `Edit wallet ${data.name}` : 'Create new wallet')
       }
-      header={isEditMode ? `Edit wallet ${data.name}` : 'Create new wallet'}
       onSubmit={handleSubmit}
       onClose={handleClose}
     />

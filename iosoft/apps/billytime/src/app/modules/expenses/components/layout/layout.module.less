@@ -1,8 +1,16 @@
 .container {
   display: flex;
   flex-flow: column;
+  height: 100%;
+  position: relative;
 
-  & > *:first-child {
+  & > *:first-child(:not(.loader)) {
     margin-bottom: 24px;
+  }
+
+  .loader {
+    position: absolute;
+    inset: 0;
+    margin: auto;
   }
 }

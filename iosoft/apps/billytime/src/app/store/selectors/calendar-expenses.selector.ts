@@ -14,12 +14,14 @@ export const selectCalendarExpenses = createSelector(
         {}
       );
 
-      return expenses.data.map(
-        ({ walletId, ...expense }): CalendarExpense => ({
-          ...expense,
-          wallet: walletsDict[walletId],
-        })
-      );
+      return expenses.data
+        .filter((expense) => !!walletsDict[expense.walletId])
+        .map(
+          ({ walletId, ...expense }): CalendarExpense => ({
+            ...expense,
+            wallet: walletsDict[walletId],
+          })
+        );
     }
 
     return [];

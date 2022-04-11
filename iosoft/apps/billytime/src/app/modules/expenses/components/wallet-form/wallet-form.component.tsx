@@ -16,8 +16,8 @@ export const WalletFormComponent = ({
   onSubmit,
 }: WalletFormComponentProps) => {
   const vo = useVo(data, {
-    name: [required(), minLength(3), maxLength(20)],
-    description: [minLength(3), maxLength(20)],
+    name: [required(), minLength(3), maxLength(60)],
+    description: [minLength(3), maxLength(100)],
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
