@@ -9,7 +9,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TodayIcon from '@mui/icons-material/Today';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { ExpenseFormModalComponent } from '../expense-form-modal';
+import { ExpenseFormComponent } from '../expense-form';
 import {
   createExpense,
   selectExpenseCreationStatus,
@@ -17,6 +17,7 @@ import {
   useAppSelector,
 } from 'apps/billytime/src/app/store';
 import { CalendarExpense } from 'apps/billytime/src/app/models';
+import { Modal } from 'apps/billytime/src/app/ui';
 
 interface ExpensesCalendarComponentProps {
   data: CalendarExpense[];
@@ -236,20 +237,23 @@ export const ExpensesCalendarComponent = ({
       </div>
 
       {expenseFormData && (
-        <ExpenseFormModalComponent
-          data={expenseFormData}
-          disabled={expenseCreationStatus.type === 'Pending'}
+        <Modal
           header={
             isEditMode
               ? `Edit expense ${expenseFormData.name}`
               : 'Create new expense'
           }
-          onSubmit={handleSubmit}
           onClose={() => {
             setExpenseFormData(null);
             setExpenseToEditId(-1);
           }}
-        />
+        >
+          <ExpenseFormComponent
+            data={expenseFormData}
+            disabled={expenseCreationStatus.type === 'Pending'}
+            onSubmit={handleSubmit}
+          />
+        </Modal>
       )}
     </div>
   );

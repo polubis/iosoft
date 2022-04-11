@@ -1,34 +1,25 @@
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
+import { ReactNode } from 'react';
 
-import {
-  ExpenseFormComponent,
-  ExpenseFormComponentProps,
-} from '../expense-form';
-
-interface ExpenseFormModalComponentProps extends ExpenseFormComponentProps {
+export interface ModalProps {
   header: string;
+  children: ReactNode;
   onClose: () => void;
 }
 
-export const ExpenseFormModalComponent = ({
-  header,
-  onClose,
-  ...formProps
-}: ExpenseFormModalComponentProps) => {
+export const Modal = ({ header, children, onClose }: ModalProps) => {
   return (
     <Dialog
       open
-      sx={{ minWidth: 450 }}
+      sx={{ minWidth: 425 }}
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">{header}</DialogTitle>
-      <DialogContent>
-        <ExpenseFormComponent {...formProps} />
-      </DialogContent>
+      <DialogContent>{children}</DialogContent>
     </Dialog>
   );
 };

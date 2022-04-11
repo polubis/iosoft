@@ -1,5 +1,4 @@
 import { Id, WalletFormData } from '@iosoft/billytime-core';
-import { isPendingState } from '@iosoft/sm';
 import {
   useAppDispatch,
   useAppSelector,
@@ -7,15 +6,15 @@ import {
   createWallet,
   editWallet,
 } from '../../../store';
-import {
-  WalletFormModalComponent,
-  WalletFormModalComponentProps,
-} from '../components';
+import { Modal, ModalProps } from '../../../ui';
+import { WalletFormComponent, WalletFormComponentProps } from '../components';
 
-interface WalletFormModalContainerProps
-  extends Omit<WalletFormModalComponentProps, 'header' | 'onSubmit'> {
+interface WalletFormModalContainerProps {
   id: Id;
-  header?: string;
+  data: WalletFormComponentProps['data'];
+  disabled?: WalletFormComponentProps['disabled'];
+  header?: ModalProps['header'];
+  onClose: ModalProps['onClose'];
 }
 
 export const WalletFormModalContainer = ({
@@ -41,15 +40,14 @@ export const WalletFormModalContainer = ({
   };
 
   return (
-    <WalletFormModalComponent
-      data={data}
-      disabled={disabled}
+    <Modal
       header={
         header ??
         (isEditMode ? `Edit wallet ${data.name}` : 'Create new wallet')
       }
-      onSubmit={handleSubmit}
       onClose={handleClose}
-    />
+    >
+      <WalletFormComponent data={data} onSubmit={handleSubmit} />
+    </Modal>
   );
 };
