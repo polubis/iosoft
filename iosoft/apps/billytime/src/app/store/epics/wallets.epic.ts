@@ -1,7 +1,8 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { Epic } from 'redux-observable';
-import { catchError, map, of, switchMap, filter, concat } from 'rxjs';
+import { catchError, map, of, switchMap, filter, tap } from 'rxjs';
 import { walletsService } from '../../services';
+import { showAlert } from '../../ui';
 import {
   createWallet,
   createdWallet,
@@ -20,7 +21,11 @@ export const createWalletEpic: Epic<AnyAction, AnyAction, AppState> = (
     switchMap(({ payload }) =>
       walletsService.createWallet(payload).pipe(
         map((wallet) => createdWallet(wallet)),
-        catchError(() => of(createWalletFail()))
+        tap(() => showAlert('Wallet successfully created', 'success')),
+        catchError(() => {
+          showAlert('Wallet creation failed');
+          return of(createWalletFail());
+        })
       )
     )
   );

@@ -187,7 +187,10 @@ export const ExpensesCalendarComponent = ({
                       });
                     }}
                   >
-                    <div className={css['itemMarker']} style={{ background: item.wallet.color }} />
+                    <div
+                      className={css['itemMarker']}
+                      style={{ background: item.wallet.color }}
+                    />
                     <div className={css['itemContent']}>
                       <header className={css['itemHeader']}>
                         <span className={css['itemTextSmall']}>

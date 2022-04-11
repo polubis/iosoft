@@ -21,19 +21,17 @@ export const WalletFormModalContainer = ({
   id,
   onClose,
 }: WalletFormModalContainerProps) => {
+  const dispatch = useAppDispatch();
   const [creationStatus, editStatus] = useAppSelector(
     selectWalletFormDataStatuses
   );
-  const dispatch = useAppDispatch();
-
   const isEditMode = id !== -1;
+  const disabled =
+    creationStatus.type === 'Pending' || editStatus.type === 'Pending';
 
   const handleSubmit = (data: WalletFormData) => {
     dispatch(isEditMode ? editWallet({ data, id }) : createWallet(data));
   };
-
-  const disabled =
-    creationStatus.type === 'Pending' || editStatus.type === 'Pending';
 
   const handleClose = () => {
     disabled || onClose();

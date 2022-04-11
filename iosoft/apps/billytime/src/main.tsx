@@ -6,6 +6,7 @@ import { environment } from './environments/environment';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import { AppRouter } from './app';
+import { Alerts } from './app/ui';
 
 if (!environment.production) {
   const { worker } = require('./app/mocks/browser');
@@ -14,6 +15,7 @@ if (!environment.production) {
 
 ReactDOM.render(
   <StrictMode>
+    <Alerts />
     <Provider store={store}>
       <BrowserRouter>
         <AppRouter />
