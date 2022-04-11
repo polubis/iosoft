@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { delay, mergeMap, of, Subject, tap } from 'rxjs';
-import { usePortal } from '../../utils';
+import { usePortal } from '../../utils/usePortal';
 
-import { Alert, AlertProps } from './alert';
+import { Alert, AlertProps } from '../../atoms';
 
-import css from './alert.module.less';
+import css from './alerts.module.less';
 
 interface AlertData extends Omit<AlertProps, 'onClose' | 'marker'> {
   id: number;
