@@ -1,4 +1,6 @@
 import { Id, WalletFormData } from '@iosoft/billytime-core';
+import { isDoneState } from '@iosoft/sm';
+import { useEffect } from 'react';
 import {
   useAppDispatch,
   useAppSelector,
@@ -39,6 +41,12 @@ export const WalletFormModalContainer = ({
     disabled || onClose();
   };
 
+  useEffect(() => {
+    if (isDoneState(creationStatus) || isDoneState(editStatus)) {
+      handleClose();
+    }
+  }, [creationStatus, editStatus]);
+
   return (
     <Modal
       header={
@@ -47,7 +55,11 @@ export const WalletFormModalContainer = ({
       }
       onClose={handleClose}
     >
-      <WalletFormComponent data={data} onSubmit={handleSubmit} />
+      <WalletFormComponent
+        data={data}
+        disabled={disabled}
+        onSubmit={handleSubmit}
+      />
     </Modal>
   );
 };

@@ -7,7 +7,9 @@ export const {
   createWallet,
   createdWallet,
   createWalletFail,
+  idleCreateWallet,
   editWallet,
   editedWallet,
   editWalletFail,
+  idleEditWallet,
 } = walletsSlice.actions;

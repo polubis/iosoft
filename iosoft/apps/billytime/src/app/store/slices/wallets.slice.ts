@@ -37,6 +37,9 @@ export const walletsSlice = createSlice({
     createWalletFail: (state) => {
       state.walletCreationStatus = Fail();
     },
+    idleCreateWallet: (state) => {
+      state.walletCreationStatus = Idle();
+    },
     editWallet: (
       state,
       { payload }: PayloadAction<{ data: WalletFormData; id: Id }>
@@ -55,6 +58,9 @@ export const walletsSlice = createSlice({
     },
     editWalletFail: (state) => {
       state.walletEditStatus = Fail();
+    },
+    idleEditWallet: (state) => {
+      state.walletEditStatus = Idle();
     },
   },
 });

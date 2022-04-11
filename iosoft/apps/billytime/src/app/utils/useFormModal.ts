@@ -6,7 +6,7 @@ const DEFAULT_ID = -1;
 export const useFormModal = <T>() => {
   const [formModalData, setFormModalData] = useState<T | null>(null);
   const [formModalId, setFormModalId] = useState<Id>(DEFAULT_ID);
-  console.log(formModalId);
+
   return {
     formModalData,
     formModalId,
