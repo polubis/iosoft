@@ -1,7 +1,8 @@
+import { useAppSelector } from '../../../store';
 import { ExpensesCalendarComponent } from '../components';
-import { useAppSelector, selectCalendarExpenses } from '../../../store';
+import { calendarSelector } from '../selectors';
 
 export const ExpensesContainer = () => {
-  const calendarExpenses = useAppSelector(selectCalendarExpenses);
-  return <ExpensesCalendarComponent data={calendarExpenses} />;
+  const data = useAppSelector(calendarSelector.data);
+  return <ExpensesCalendarComponent data={data} />;
 };

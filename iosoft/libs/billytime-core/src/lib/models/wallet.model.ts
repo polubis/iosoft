@@ -16,3 +16,8 @@ export interface WalletFormData {
   color: string;
   currency: string;
 }
+
+export interface EditWalletFormData {
+  data: WalletFormData;
+  id: Id;
+}

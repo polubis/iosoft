@@ -1,10 +1,10 @@
-import { ExpenseFormData } from '@iosoft/billytime-core';
-import { from } from 'rxjs';
+import { Expense, ExpenseFormData } from '@iosoft/billytime-core';
+import { from, Observable } from 'rxjs';
 import { AWS_INSTANCE } from './instances';
 
 export const expensesService = {
-  loadExpenses: () =>
+  load: (): Observable<Expense[]> =>
     from(AWS_INSTANCE.get('/expenses').then((res) => res.data)),
-  createExpense: (data: ExpenseFormData) =>
+  create: (data: ExpenseFormData): Observable<Expense> =>
     from(AWS_INSTANCE.post('/expenses', data).then((res) => res.data)),
 };

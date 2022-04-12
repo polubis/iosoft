@@ -1,62 +1,53 @@
-import { Id, WalletFormData } from '@iosoft/billytime-core';
-import { isDoneState } from '@iosoft/sm';
+import { WalletFormData } from '@iosoft/billytime-core';
 import { useEffect } from 'react';
 import {
   useAppDispatch,
   useAppSelector,
-  selectWalletFormDataStatuses,
-  createWallet,
-  editWallet,
+  walletAction,
+  walletSelector,
 } from '../../../store';
-import { Modal, ModalProps } from '../../../ui';
-import { WalletFormComponent, WalletFormComponentProps } from '../components';
+import { Modal } from '../../../ui';
+import { WalletFormComponent } from '../components';
 
-interface WalletFormModalContainerProps {
-  id: Id;
-  data: WalletFormComponentProps['data'];
-  disabled?: WalletFormComponentProps['disabled'];
-  header?: ModalProps['header'];
-  onClose: ModalProps['onClose'];
-}
-
-export const WalletFormModalContainer = ({
-  data,
-  id,
-  header,
-  onClose,
-}: WalletFormModalContainerProps) => {
+export const WalletFormModalContainer = () => {
   const dispatch = useAppDispatch();
-  const [creationStatus, editStatus] = useAppSelector(
-    selectWalletFormDataStatuses
-  );
+  const walletStep = useAppSelector(walletSelector.step);
+  const walletData = useAppSelector(walletSelector.data);
+  const id = useAppSelector(walletSelector.idToEdit);
   const isEditMode = id !== -1;
-  const disabled =
-    creationStatus.type === 'Pending' || editStatus.type === 'Pending';
+  const disabled = walletStep === 'creating' || walletStep === 'editing';
 
   const handleSubmit = (data: WalletFormData) => {
-    dispatch(isEditMode ? editWallet({ data, id }) : createWallet(data));
+    dispatch(
+      isEditMode
+        ? walletAction.editing({ data, id })
+        : walletAction.creating(data)
+    );
   };
 
   const handleClose = () => {
-    disabled || onClose();
+    disabled || dispatch(walletAction.idle());
   };
 
   useEffect(() => {
-    if (isDoneState(creationStatus) || isDoneState(editStatus)) {
-      handleClose();
-    }
-  }, [creationStatus, editStatus]);
+    return () => {
+      dispatch(walletAction.idle());
+    };
+  }, []);
+
+  if (!walletData) {
+    return null;
+  }
 
   return (
     <Modal
       header={
-        header ??
-        (isEditMode ? `Edit wallet ${data.name}` : 'Create new wallet')
+        isEditMode ? `Edit wallet ${walletData.name}` : 'Create new wallet'
       }
       onClose={handleClose}
     >
       <WalletFormComponent
-        data={data}
+        data={walletData}
         disabled={disabled}
         onSubmit={handleSubmit}
       />

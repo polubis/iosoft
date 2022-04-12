@@ -1,6 +1,6 @@
 import { Id } from './general.model';
 
-export interface LoggedInUser {
+export interface AuthorizedUser {
   id: Id;
   username: string;
 }

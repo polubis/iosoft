@@ -24,6 +24,11 @@ export interface ExpenseFormData {
   description: string;
 }
 
+export interface EditExpenseFormData {
+  id: Id;
+  data: ExpenseFormData;
+}
+
 export const EXPENSE_CATEGORIES_DICTIONARY: ExpenseCategory[] = [
   {
     id: 0,

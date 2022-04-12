@@ -1,54 +1,51 @@
-import { ExpensesContainer, WalletsContainer } from './containers';
+import {
+  ExpensesContainer,
+  WalletFormModalContainer,
+  WalletsContainer,
+} from './containers';
 import { LayoutComponent } from './components';
 import {
-  loadWallets,
-  selectExpenses,
-  selectWallets,
+  walletsAction,
+  walletsSelector,
+  expensesSelector,
   useAppDispatch,
   useAppSelector,
+  expensesAction,
 } from '../../store';
 import { useEffect } from 'react';
-import { isDoneState, isFailState, isPendingState } from '@iosoft/sm';
-import { WalletFormModalContainer } from './containers/wallet-form-modal.container';
-import { CURRENCY_DICTIONARY } from '@iosoft/billytime-core';
 
 export const ExpensesModule = () => {
-  const wallets = useAppSelector(selectWallets);
-  const expenses = useAppSelector(selectExpenses);
+  const walletsStep = useAppSelector(walletsSelector.step);
+  const expensesStep = useAppSelector(expensesSelector.step);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadWallets());
+    dispatch(walletsAction.loading());
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(walletsAction.idle());
+      dispatch(expensesAction.idle());
+    };
   }, []);
 
   return (
-    <LayoutComponent
-      pending={isPendingState(wallets) || isPendingState(expenses)}
-      fail={isFailState(wallets) || isFailState(expenses)}
-    >
-      {() =>
-        isDoneState(wallets) &&
-        isDoneState(expenses) &&
-        (wallets.data.length === 0 ? (
-          <WalletFormModalContainer
-            id={-1}
-            header="Create your first wallet"
-            data={{
-              color: '#000',
-              name: 'My first wallet',
-              description: '',
-              currency: CURRENCY_DICTIONARY[0].value,
-            }}
-            onClose={() => {}}
-          />
-        ) : (
+    <>
+      <WalletFormModalContainer />
+
+      <LayoutComponent
+        pending={walletsStep === 'loading' || expensesStep === 'loading'}
+        fail={walletsStep === 'loadFail' || expensesStep === 'loadFail'}
+      >
+        {() => (
           <>
-            <WalletsContainer data={wallets.data} />
+            <WalletsContainer />
             <ExpensesContainer />
           </>
-        ))
-      }
-    </LayoutComponent>
+        )}
+      </LayoutComponent>
+    </>
   );
 };

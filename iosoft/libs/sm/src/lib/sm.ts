@@ -1,36 +1,44 @@
-export interface Stateable {
-  type: string;
-}
+export type State<T extends string, D = null> = D extends null
+  ? { step: T }
+  : { step: T; data: D };
 
-export interface IdleState extends Stateable {
-  type: 'Idle';
-}
+// Add mapping type which removes double union in return
+// To dataSetter callback pass only data
+// Try to implement curried version with infer next('creating', 'created', s => {})
+// add option to use is in reducers
+export const next = <
+  S extends { step: string; data?: any },
+  K extends S['step']
+>(
+  state: S,
+  to: K,
+  allow: S['step'] | S['step'][] = [],
+  dataSetter?: S['data'] | ((state: S & { step: K }) => void)
+) => {
+  const allowArr = Array.isArray(allow) ? allow : [allow];
 
-export interface PendingState extends Stateable {
-  type: 'Pending';
-}
+  if (allow.length > 0 && !allowArr.includes(state.step)) {
+    throw new Error(
+      `[INVALID_STATE_CHANGE_DETECTED] From: ${
+        state.step
+      } to: ${to} allowed: ${allowArr.join(',')}`
+    );
+  }
 
-export interface DoneState<T> extends Stateable {
-  type: 'Done';
-  data: T;
-}
+  state.step = to;
 
-export interface FailState extends Stateable {
-  type: 'Fail';
-}
+  if (!dataSetter) {
+    return state as S & { step: K };
+  }
 
-export type State<T> = IdleState | PendingState | DoneState<T> | FailState;
+  if (typeof dataSetter !== 'function') {
+    state.data = dataSetter;
+    return state as S & { step: K };
+  }
 
-export const Idle = (): IdleState => ({ type: 'Idle' });
-export const Pending = (): PendingState => ({ type: 'Pending' });
-export const Done = <T>(data: T): DoneState<T> => ({ data, type: 'Done' });
-export const Fail = (): FailState => ({ type: 'Fail' });
+  if (typeof dataSetter === 'function') {
+    (dataSetter as Function)(state);
+  }
 
-export const isPendingState = <T>(state: State<T>): state is PendingState =>
-  state.type === 'Pending';
-
-export const isDoneState = <T>(state: State<T>): state is DoneState<T> =>
-  state.type === 'Done';
-
-export const isFailState = <T>(state: State<T>): state is FailState =>
-  state.type === 'Fail';
+  return state as S & { step: K };
+};

@@ -6,17 +6,17 @@ import { App } from './app';
 export const AppRouter = () => {
   return (
     <Routes>
-      <Route path={APP_ROUTER_CONFIG.APP.path} element={<App />}>
+      <Route path={APP_ROUTER_CONFIG.app.path} element={<App />}>
         <Route
-          path={APP_ROUTER_CONFIG.DASHBOARD.path}
+          path={APP_ROUTER_CONFIG.dashboard.path}
           element={<div>Dashboard</div>}
         />
         <Route
-          path={APP_ROUTER_CONFIG.ALARMS.path}
+          path={APP_ROUTER_CONFIG.alarms.path}
           element={<div>Alarms</div>}
         />
         <Route
-          path={APP_ROUTER_CONFIG.EXPENSES.path}
+          path={APP_ROUTER_CONFIG.expenses.path}
           element={<ExpensesModule />}
         />
       </Route>

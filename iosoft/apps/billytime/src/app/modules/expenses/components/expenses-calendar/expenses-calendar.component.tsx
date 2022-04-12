@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Expense, ExpenseFormData, Id } from '@iosoft/billytime-core';
+import { ExpenseFormData, Id } from '@iosoft/billytime-core';
 import css from './expenses-calendar.module.less';
 import { addDays, format, getWeekOfMonth } from 'date-fns';
 import IconButton from '@mui/material/IconButton';
@@ -10,13 +10,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TodayIcon from '@mui/icons-material/Today';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { ExpenseFormComponent } from '../expense-form';
-import {
-  createExpense,
-  selectExpenseCreationStatus,
-  useAppDispatch,
-  useAppSelector,
-} from 'apps/billytime/src/app/store';
-import { CalendarExpense } from 'apps/billytime/src/app/models';
+import { useAppDispatch } from 'apps/billytime/src/app/store';
+import { CalendarExpense } from '../../models';
 import { Modal } from 'apps/billytime/src/app/ui';
 
 interface ExpensesCalendarComponentProps {
@@ -107,17 +102,16 @@ export const ExpensesCalendarComponent = ({
 
   const nowAsString = format(new Date(), DATE_FORMAT);
 
-  const expenseCreationStatus = useAppSelector(selectExpenseCreationStatus);
   const dispatch = useAppDispatch();
 
   const isEditMode = expenseToEditId !== -1;
 
   const handleSubmit = (data: ExpenseFormData) => {
-    if (isEditMode) {
-      // Handle edit here
-    } else {
-      dispatch(createExpense(data));
-    }
+    // if (isEditMode) {
+    //   // Handle edit here
+    // } else {
+    //   dispatch(createExpense(data));
+    // }
   };
 
   return (
@@ -250,7 +244,6 @@ export const ExpensesCalendarComponent = ({
         >
           <ExpenseFormComponent
             data={expenseFormData}
-            disabled={expenseCreationStatus.type === 'Pending'}
             onSubmit={handleSubmit}
           />
         </Modal>

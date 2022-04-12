@@ -1,27 +1,21 @@
-import { LoggedInUser, LogInFormData } from '@iosoft/billytime-core';
-import { Done, Fail, Idle, Pending, State } from '@iosoft/sm';
+import { AuthorizedUser, LogInFormData } from '@iosoft/billytime-core';
+import { next, State } from '@iosoft/sm';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface AuthorizationState {
-  user: State<LoggedInUser>;
-}
-
-const initialState: AuthorizationState = {
-  user: Idle(),
-};
+type AuthorizationState =
+  | State<'idle'>
+  | State<'authorizing'>
+  | State<'authorized', AuthorizedUser>
+  | State<'authorizeFail'>;
 
 export const authorizationSlice = createSlice({
   name: 'authorization',
-  initialState,
+  initialState: <AuthorizationState>{ step: 'idle' },
   reducers: {
-    logIn: (state, { payload }: PayloadAction<LogInFormData>) => {
-      state.user = Pending();
-    },
-    loggedIn: (state, { payload }: PayloadAction<LoggedInUser>) => {
-      state.user = Done(payload);
-    },
-    logInFail: (state) => {
-      state.user = Fail();
-    },
+    authorizing: (state, { payload }: PayloadAction<LogInFormData>) =>
+      next(state, 'authorizing', 'idle'),
+    authorized: (state, { payload }: PayloadAction<AuthorizedUser>) =>
+      next(state, 'authorized', 'authorizing', payload),
+    authorizeFail: (state) => next(state, 'authorizeFail', 'authorizing'),
   },
 });

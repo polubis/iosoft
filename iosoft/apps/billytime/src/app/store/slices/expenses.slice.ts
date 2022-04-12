@@ -1,39 +1,21 @@
-import { Expense, ExpenseFormData } from '@iosoft/billytime-core';
-import { Done, Fail, Idle, isDoneState, Pending, State } from '@iosoft/sm';
+import { Expense } from '@iosoft/billytime-core';
+import { next, State } from '@iosoft/sm';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ExpensesState {
-  expenses: State<Expense[]>;
-  expenseCreationStatus: State<Expense>;
-}
-
-const initialState: ExpensesState = {
-  expenses: Idle(),
-  expenseCreationStatus: Idle(),
-};
+type ExpensesState =
+  | State<'idle'>
+  | State<'loading'>
+  | State<'loaded', Expense[]>
+  | State<'loadFail'>;
 
 export const expensesSlice = createSlice({
   name: 'expenses',
-  initialState,
+  initialState: <ExpensesState>{ step: 'idle' },
   reducers: {
-    loadExpenses: (state) => {
-      state.expenses = Pending();
-    },
-    loadedExpenses: (state, { payload }: PayloadAction<Expense[]>) => {
-      state.expenses = Done(payload);
-    },
-    loadExpensesFail: (state) => {
-      state.expenses = Fail();
-    },
-    createExpense: (state, { payload }: PayloadAction<ExpenseFormData>) => {
-      state.expenseCreationStatus = Pending();
-    },
-    createdExpense: (state, { payload }: PayloadAction<Expense>) => {
-      state.expenseCreationStatus = Done(payload);
-      isDoneState(state.expenses) && state.expenses.data.push(payload);
-    },
-    createExpenseFail: (state) => {
-      state.expenseCreationStatus = Fail();
-    },
+    idle: (state) => next(state, 'idle'),
+    loading: (state) => next(state, 'loading', 'idle'),
+    loaded: (state, { payload }: PayloadAction<Expense[]>) =>
+      next(state, 'loaded', 'loading', payload),
+    loadFail: (state) => next(state, 'loadFail', 'loading'),
   },
 });

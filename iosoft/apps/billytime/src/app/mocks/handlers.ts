@@ -8,7 +8,7 @@ import {
   CURRENCY_DICTIONARY,
   Wallet,
   LogInFormData,
-  LoggedInUser,
+  AuthorizedUser,
   WalletFormData,
 } from '@iosoft/billytime-core';
 
@@ -99,7 +99,7 @@ const WALLETS_MOCK: Wallet[] = [
 export const handlers = [
   // EXPENSES
   rest.get(environment.API + '/expenses', (req, res, ctx) => {
-    return res(ctx.delay(1000), ctx.status(200), ctx.json(EXPENSES_MOCK));
+    return res(ctx.delay(500), ctx.status(200), ctx.json(EXPENSES_MOCK));
   }),
   rest.post(environment.API + '/expenses', (req, res, ctx) => {
     const body = req.body as ExpenseFormData;
@@ -126,7 +126,7 @@ export const handlers = [
   // AUTHORIZATION
   rest.post(environment.API + '/authorization/log-in', (req, res, ctx) => {
     const body = req.body as LogInFormData;
-    const resBody: LoggedInUser = {
+    const resBody: AuthorizedUser = {
       id: Math.ceil(Math.random() * 100),
       username: body.username,
     };
@@ -136,7 +136,7 @@ export const handlers = [
 
   // WALLETS
   rest.get(environment.API + '/wallets', (req, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(WALLETS_MOCK));
+    return res(ctx.delay(1000), ctx.status(200), ctx.json(WALLETS_MOCK));
   }),
 
   rest.post(environment.API + '/wallets', (req, res, ctx) => {
@@ -153,7 +153,6 @@ export const handlers = [
   }),
 
   rest.patch(environment.API + '/wallets/:id', (req, res, ctx) => {
-    console.log((req.params as any).id);
     const body = req.body as WalletFormData;
     const resBody: Wallet = {
       id: +(req.params as any).id,

@@ -1,3 +1,3 @@
-import { authorizationSlice } from "../slices";
+import { authorizationSlice } from '../slices';
 
-export const { logIn, loggedIn, logInFail } = authorizationSlice.actions;
+export const authorizationAction = authorizationSlice.actions;
