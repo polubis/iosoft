@@ -1,66 +1,46 @@
 import { Id, Wallet, WalletFormData } from '@iosoft/billytime-core';
-import { Done, Fail, Idle, isDoneState, Pending, State } from '@iosoft/sm';
+import { NState, next } from '@iosoft/sm';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ExpensesState {
-  wallets: State<Wallet[]>;
-  walletCreationStatus: State<Wallet>;
-  walletEditStatus: State<Wallet>;
-}
-
-const initialState: ExpensesState = {
-  wallets: Idle(),
-  walletCreationStatus: Idle(),
-  walletEditStatus: Idle(),
-};
+type WalletsState =
+  | NState<'idle'>
+  | NState<'loading'>
+  | NState<'loaded', Wallet[]>
+  | NState<'loadFail'>
+  | NState<'creating', Wallet[]>
+  | NState<'created', Wallet[]>
+  | NState<'createFail'>
+  | NState<'editing', Wallet[]>
+  | NState<'edited', Wallet[]>
+  | NState<'editFail'>;
 
 export const walletsSlice = createSlice({
   name: 'wallets',
-  initialState,
   reducers: {
-    loadWallets: (state) => {
-      state.wallets = Pending();
+    loading: (state) => next(state, 'loading', 'idle'),
+    loaded: (state, { payload }: PayloadAction<Wallet[]>) =>
+      next(state, 'loaded', 'loading', payload),
+    loadFail: (state) => next(state, 'loadFail', 'loading'),
+    creating: (state, { payload }: PayloadAction<WalletFormData>) =>
+      next(state, 'creating', 'loaded'),
+    created: (state, { payload }: PayloadAction<Wallet>) => {
+      next(state, 'created', 'creating', (currState) =>
+        currState.data.push(payload)
+      );
     },
-    loadedWallets: (state, { payload }: PayloadAction<Wallet[]>) => {
-      state.wallets = Done(payload);
-    },
-    loadWalletsFail: (state) => {
-      state.wallets = Fail();
-    },
-    createWallet: (state, { payload }: PayloadAction<WalletFormData>) => {
-      state.walletCreationStatus = Pending();
-    },
-    createdWallet: (state, { payload }: PayloadAction<Wallet>) => {
-      state.walletCreationStatus = Done(payload);
-      isDoneState(state.wallets) && state.wallets.data.push(payload);
-    },
-    createWalletFail: (state) => {
-      state.walletCreationStatus = Fail();
-    },
-    idleCreateWallet: (state) => {
-      state.walletCreationStatus = Idle();
-    },
-    editWallet: (
+    createFail: (state) => next(state, 'createFail', 'creating'),
+    idleCreate: (state) => next(state, 'loaded', 'created'),
+    editing: (
       state,
-      { payload }: PayloadAction<{ data: WalletFormData; id: Id }>
-    ) => {
-      state.walletEditStatus = Pending();
-    },
-    editedWallet: (state, { payload }: PayloadAction<Wallet>) => {
-      state.walletEditStatus = Done(payload);
-
-      if (isDoneState(state.wallets)) {
-        const idx = state.wallets.data.findIndex(
-          (item) => item.id === payload.id
-        );
-        state.wallets.data[idx] = payload;
-      }
-    },
-    editWalletFail: (state) => {
-      state.walletEditStatus = Fail();
-    },
-    idleEditWallet: (state) => {
-      state.walletEditStatus = Idle();
-    },
+      { payload }: PayloadAction<{ id: Id; data: WalletFormData }>
+    ) => next(state, 'editing', 'loaded'),
+    edited: (state, { payload }: PayloadAction<Wallet>) =>
+      next(state, 'edited', 'editing', (currState) => {
+        const idx = currState.data.findIndex((item) => item.id === payload.id);
+        currState.data[idx] = payload;
+      }),
+    editFail: (state) => next(state, 'editFail', 'editing'),
+    idleEdit: (state) => next(state, 'loaded', 'edited'),
   },
+  initialState: <WalletsState>{ step: 'idle' },
 });

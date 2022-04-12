@@ -3,52 +3,43 @@ import { Epic } from 'redux-observable';
 import { catchError, map, of, switchMap, filter, tap, concat } from 'rxjs';
 import { walletsService } from '../../services';
 import { showAlert } from '../../ui';
-import {
-  createWallet,
-  createdWallet,
-  createWalletFail,
-  editWallet,
-  editedWallet,
-  editWalletFail,
-  idleCreateWallet,
-  idleEditWallet,
-} from '../actions';
+import { walletsActions } from '../actions';
 import { AppState } from '../store';
 
 export const createWalletEpic: Epic<AnyAction, AnyAction, AppState> = (
   action$
 ) =>
   action$.pipe(
-    filter(createWallet.match),
+    filter(walletsActions.creating.match),
     switchMap(({ payload }) =>
       concat(
-        walletsService.createWallet(payload).pipe(
-          map((wallet) => createdWallet(wallet)),
+        walletsService.creating(payload).pipe(
+          map((wallet) => walletsActions.created(wallet)),
           tap(() => showAlert('Wallet successfully created', 'success')),
           catchError(() => {
             showAlert('Wallet creation failed');
-            return of(createWalletFail());
+            return of(walletsActions.createFail());
           })
         ),
-        of(idleCreateWallet())
+        of(walletsActions.idleCreate())
       )
     )
   );
 
 export const editWalletEpic: Epic<AnyAction, AnyAction, AppState> = (action$) =>
   action$.pipe(
-    filter(editWallet.match),
+    filter(walletsActions.editing.match),
     switchMap(({ payload }) =>
       concat(
-        walletsService.editWallet(payload.data, payload.id).pipe(
-          map((wallet) => editedWallet(wallet)),
+        walletsService.editing(payload.data, payload.id).pipe(
+          map((wallet) => walletsActions.edited(wallet)),
           tap(() => showAlert('Wallet successfully edited', 'success')),
           catchError(() => {
             showAlert('Wallet edition failed');
-            return of(editWalletFail());
+            return of(walletsActions.editFail());
           })
         ),
-        of(idleEditWallet())
+        of(walletsActions.idleEdit())
       )
     )
   );

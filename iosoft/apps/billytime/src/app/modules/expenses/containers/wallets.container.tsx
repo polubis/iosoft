@@ -1,4 +1,7 @@
-import { useAppSelector, selectWalletCreationStatus } from '../../../store';
+import {
+  useAppSelector,
+  selectWalletsStep,
+} from '../../../store';
 import { useState } from 'react';
 import { CheckedItems, WalletsGridComponent } from '../components';
 import {
@@ -27,7 +30,7 @@ interface WalletsContainerProps {
 }
 
 export const WalletsContainer = ({ data }: WalletsContainerProps) => {
-  const walletCreationStatus = useAppSelector(selectWalletCreationStatus);
+  const walletsStep = useAppSelector(selectWalletsStep);
   const [checkedWallets, handleSetCheckedWallet] = useCheckedWallets();
   const { openForCreate, openForEdit, close, formModalData, formModalId } =
     useFormModal<WalletFormData>();
@@ -38,7 +41,7 @@ export const WalletsContainer = ({ data }: WalletsContainerProps) => {
         <WalletFormModalContainer
           data={formModalData}
           id={formModalId}
-          disabled={walletCreationStatus.type === 'Pending'}
+          disabled={walletsStep === 'creating'}
           onClose={close}
         />
       )}

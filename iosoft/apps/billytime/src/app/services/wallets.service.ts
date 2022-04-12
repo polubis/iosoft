@@ -4,9 +4,9 @@ import { AWS_INSTANCE } from './instances';
 
 export const walletsService = {
   loadWallets: () => from(AWS_INSTANCE.get('/wallets').then((res) => res.data)),
-  createWallet: (formData: WalletFormData) =>
+  creating: (formData: WalletFormData) =>
     from(AWS_INSTANCE.post('/wallets', formData).then((res) => res.data)),
-  editWallet: (formData: WalletFormData, id: Id) =>
+  editing: (formData: WalletFormData, id: Id) =>
     from(
       AWS_INSTANCE.patch(`/wallets/${id}`, formData).then((res) => res.data)
     ),

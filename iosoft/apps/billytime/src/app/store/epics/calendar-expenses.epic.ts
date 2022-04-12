@@ -7,11 +7,9 @@ import {
   createExpense,
   createExpenseFail,
   loadedExpenses,
-  loadedWallets,
+  walletsActions,
   loadExpenses,
   loadExpensesFail,
-  loadWallets,
-  loadWalletsFail,
 } from '../actions';
 import { AppState } from '../store';
 
@@ -19,13 +17,13 @@ export const calendarExpensesEpic: Epic<AnyAction, AnyAction, AppState> = (
   action$
 ) => {
   return action$.pipe(
-    filter(loadWallets.match),
+    filter(walletsActions.loading.match),
     switchMap(() =>
       concat(
         of(loadExpenses()),
         walletsService.loadWallets().pipe(
-          map((wallets) => loadedWallets(wallets)),
-          catchError(() => of(loadWalletsFail()))
+          map((wallets) => walletsActions.loaded(wallets)),
+          catchError(() => of(walletsActions.loadFail()))
         ),
         expensesService.loadExpenses().pipe(
           map((expenses) => loadedExpenses(expenses)),

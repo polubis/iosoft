@@ -1,12 +1,11 @@
 import { Id, WalletFormData } from '@iosoft/billytime-core';
-import { isDoneState } from '@iosoft/sm';
+import { isBusy } from '@iosoft/sm';
 import { useEffect } from 'react';
 import {
   useAppDispatch,
   useAppSelector,
-  selectWalletFormDataStatuses,
-  createWallet,
-  editWallet,
+  walletsActions,
+  selectWalletsStep,
 } from '../../../store';
 import { Modal, ModalProps } from '../../../ui';
 import { WalletFormComponent, WalletFormComponentProps } from '../components';
@@ -26,15 +25,16 @@ export const WalletFormModalContainer = ({
   onClose,
 }: WalletFormModalContainerProps) => {
   const dispatch = useAppDispatch();
-  const [creationStatus, editStatus] = useAppSelector(
-    selectWalletFormDataStatuses
-  );
+  const walletsStep = useAppSelector(selectWalletsStep);
   const isEditMode = id !== -1;
-  const disabled =
-    creationStatus.type === 'Pending' || editStatus.type === 'Pending';
+  const disabled = isBusy(walletsStep);
 
   const handleSubmit = (data: WalletFormData) => {
-    dispatch(isEditMode ? editWallet({ data, id }) : createWallet(data));
+    dispatch(
+      isEditMode
+        ? walletsActions.editing({ data, id })
+        : walletsActions.creating(data)
+    );
   };
 
   const handleClose = () => {
@@ -42,10 +42,8 @@ export const WalletFormModalContainer = ({
   };
 
   useEffect(() => {
-    if (isDoneState(creationStatus) || isDoneState(editStatus)) {
-      handleClose();
-    }
-  }, [creationStatus, editStatus]);
+    (walletsStep === 'created' || walletsStep === 'edited') && handleClose();
+  }, [walletsStep]);
 
   return (
     <Modal

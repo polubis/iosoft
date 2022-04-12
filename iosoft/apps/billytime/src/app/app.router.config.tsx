@@ -1,17 +1,17 @@
 export const APP_ROUTER_CONFIG = {
-  APP: {
+  app: {
     path: '/',
     title: 'Home',
   },
-  DASHBOARD: {
+  dashboard: {
     path: 'dashboard',
     title: 'Dashboard',
   },
-  ALARMS: {
+  alarms: {
     path: 'alarms',
     title: 'Alarms',
   },
-  EXPENSES: {
+  expenses: {
     path: 'expenses',
     title: 'Expenses',
   },

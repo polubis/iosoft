@@ -1,9 +1,10 @@
 import { ExpensesContainer, WalletsContainer } from './containers';
 import { LayoutComponent } from './components';
 import {
-  loadWallets,
+  walletsActions,
   selectExpenses,
-  selectWallets,
+  selectWalletsData,
+  selectWalletsStep,
   useAppDispatch,
   useAppSelector,
 } from '../../store';
@@ -13,24 +14,24 @@ import { WalletFormModalContainer } from './containers/wallet-form-modal.contain
 import { CURRENCY_DICTIONARY } from '@iosoft/billytime-core';
 
 export const ExpensesModule = () => {
-  const wallets = useAppSelector(selectWallets);
+  const walletsData = useAppSelector(selectWalletsData);
+  const walletsStep = useAppSelector(selectWalletsStep);
   const expenses = useAppSelector(selectExpenses);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadWallets());
+    dispatch(walletsActions.loading());
   }, []);
 
   return (
     <LayoutComponent
-      pending={isPendingState(wallets) || isPendingState(expenses)}
-      fail={isFailState(wallets) || isFailState(expenses)}
+      pending={walletsStep === 'loading' || isPendingState(expenses)}
+      fail={walletsStep === 'loadFail' || isFailState(expenses)}
     >
       {() =>
-        isDoneState(wallets) &&
         isDoneState(expenses) &&
-        (wallets.data.length === 0 ? (
+        (walletsData.length === 0 ? (
           <WalletFormModalContainer
             id={-1}
             header="Create your first wallet"
@@ -44,8 +45,8 @@ export const ExpensesModule = () => {
           />
         ) : (
           <>
-            <WalletsContainer data={wallets.data} />
-            <ExpensesContainer />
+            <WalletsContainer data={walletsData} />
+            {/* <ExpensesContainer /> */}
           </>
         ))
       }

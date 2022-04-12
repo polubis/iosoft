@@ -8,21 +8,21 @@ export const selectCalendarExpenses = createSelector(
   selectWallets,
   selectExpenses,
   (wallets, expenses): CalendarExpense[] => {
-    if (isDoneState(expenses) && isDoneState(wallets)) {
-      const walletsDict = wallets.data.reduce<Record<Id, Wallet>>(
-        (acc, wallet) => ({ ...acc, [wallet.id]: wallet }),
-        {}
-      );
+    // if (isDoneState(expenses) && isDoneState(wallets)) {
+    //   const walletsDict = wallets.data.reduce<Record<Id, Wallet>>(
+    //     (acc, wallet) => ({ ...acc, [wallet.id]: wallet }),
+    //     {}
+    //   );
 
-      return expenses.data
-        .filter((expense) => !!walletsDict[expense.walletId])
-        .map(
-          ({ walletId, ...expense }): CalendarExpense => ({
-            ...expense,
-            wallet: walletsDict[walletId],
-          })
-        );
-    }
+    //   return expenses.data
+    //     .filter((expense) => !!walletsDict[expense.walletId])
+    //     .map(
+    //       ({ walletId, ...expense }): CalendarExpense => ({
+    //         ...expense,
+    //         wallet: walletsDict[walletId],
+    //       })
+    //     );
+    // }
 
     return [];
   }

@@ -17,20 +17,20 @@ import { CircularProgress } from '@mui/material';
 const Navigation = () => (
   <>
     <NavBtnLinkComponent
-      to={APP_ROUTER_CONFIG.DASHBOARD.path}
-      title={APP_ROUTER_CONFIG.DASHBOARD.title}
+      to={APP_ROUTER_CONFIG.dashboard.path}
+      title={APP_ROUTER_CONFIG.dashboard.title}
     >
       <DashboardIcon />
     </NavBtnLinkComponent>
     <NavBtnLinkComponent
-      to={APP_ROUTER_CONFIG.ALARMS.path}
-      title={APP_ROUTER_CONFIG.ALARMS.title}
+      to={APP_ROUTER_CONFIG.alarms.path}
+      title={APP_ROUTER_CONFIG.alarms.title}
     >
       <AccessAlarmsIcon />
     </NavBtnLinkComponent>
     <NavBtnLinkComponent
-      to={APP_ROUTER_CONFIG.EXPENSES.path}
-      title={APP_ROUTER_CONFIG.EXPENSES.title}
+      to={APP_ROUTER_CONFIG.expenses.path}
+      title={APP_ROUTER_CONFIG.expenses.title}
     >
       <ShoppingCartIcon />
     </NavBtnLinkComponent>
