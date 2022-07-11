@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import CloseIcon from '@mui/icons-material/Close';
+import { Close } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 
 import css from './alert.module.less';
@@ -26,7 +26,7 @@ export const Alert = memo(
 
         {onClose && (
           <IconButton className={css.closeBtn} onClick={onClose}>
-            <CloseIcon />
+            <Close />
           </IconButton>
         )}
       </div>

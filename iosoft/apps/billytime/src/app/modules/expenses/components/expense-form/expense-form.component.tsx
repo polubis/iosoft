@@ -14,18 +14,6 @@ export interface ExpenseFormComponentProps {
   onSubmit: (data: ExpenseFormData) => void;
 }
 
-const accountFormVo = useVo(
-  {
-    username: '',
-    password: '',
-    repeatedPassword: '',
-    email: '',
-  },
-  {
-    username: [required(), minLength(3), maxLength(20)],
-  }
-);
-
 export const ExpenseFormComponent = ({
   data,
   disabled,

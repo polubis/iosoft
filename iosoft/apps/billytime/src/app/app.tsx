@@ -1,8 +1,6 @@
 import { Layout } from './ui';
 import { NavBtnLinkComponent } from './components';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Dashboard, AccessAlarm, ShoppingCart } from '@mui/icons-material';
 import { APP_ROUTER_CONFIG } from './app.router.config';
 import { Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -20,19 +18,19 @@ const Navigation = () => (
       to={APP_ROUTER_CONFIG.dashboard.path}
       title={APP_ROUTER_CONFIG.dashboard.title}
     >
-      <DashboardIcon />
+      <Dashboard />
     </NavBtnLinkComponent>
     <NavBtnLinkComponent
       to={APP_ROUTER_CONFIG.alarms.path}
       title={APP_ROUTER_CONFIG.alarms.title}
     >
-      <AccessAlarmsIcon />
+      <AccessAlarm />
     </NavBtnLinkComponent>
     <NavBtnLinkComponent
       to={APP_ROUTER_CONFIG.expenses.path}
       title={APP_ROUTER_CONFIG.expenses.title}
     >
-      <ShoppingCartIcon />
+      <ShoppingCart />
     </NavBtnLinkComponent>
   </>
 );

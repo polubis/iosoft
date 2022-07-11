@@ -5,10 +5,9 @@ import { addDays, format, getWeekOfMonth } from 'date-fns';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { ChevronRightOutlined, ChevronLeftOutlined } from '@mui/icons-material';
 import TodayIcon from '@mui/icons-material/Today';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { AddShoppingCart } from '@mui/icons-material';
 import { ExpenseFormComponent } from '../expense-form';
 import {
   createExpense,
@@ -130,7 +129,7 @@ export const ExpensesCalendarComponent = ({
         <div className={css.navigation}>
           <Tooltip title="Previous week">
             <IconButton onClick={moveToPreviousWeek}>
-              <ChevronLeftIcon />
+              <ChevronLeftOutlined />
             </IconButton>
           </Tooltip>
           <Tooltip title="Current week">
@@ -147,7 +146,7 @@ export const ExpensesCalendarComponent = ({
           </Tooltip>
           <Tooltip title="Next week">
             <IconButton onClick={moveToNextWeek}>
-              <ChevronRightIcon />
+              <ChevronRightOutlined />
             </IconButton>
           </Tooltip>
         </div>
@@ -167,7 +166,7 @@ export const ExpensesCalendarComponent = ({
               {pickDataItems(groupedData, week, dateIdx).length === 0 ? (
                 <div className={css.noItems}>
                   <IconButton size="large" onClick={() => {}}>
-                    <AddShoppingCartIcon />
+                    <AddShoppingCart />
                   </IconButton>
                   <span>No expense on this day. Click the button to add</span>
                 </div>
@@ -216,7 +215,7 @@ export const ExpensesCalendarComponent = ({
             </div>
             <div className={css.footer}>
               <Button
-                startIcon={<AddShoppingCartIcon />}
+                startIcon={<AddShoppingCart />}
                 onClick={() => {
                   setExpenseFormData({
                     currency: '',
